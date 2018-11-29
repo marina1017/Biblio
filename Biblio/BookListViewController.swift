@@ -17,44 +17,43 @@ class BookListViewController: UIViewController {
         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         return bannerView
     }()
-    var tableView: UITableView!
+    var tableView: UITableView = {
+        var tableView = UITableView(frame: .zero, style: .plain)
+        return tableView
+    }()
 
     let items = ["Apple","Banana","Orange"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.title = "テスト"
         //広告バナー
-        addBannerViewToView(bannerView)
+        self.addBannerViewToView()
+        //TableView
+        self.addTableViewToView()
+
+    }
+
+    func addBannerViewToView() {
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
+        self.bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(self.bannerView)
+        self.bannerView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
+    }
 
-        //テーブルビュー
-        self.tableView = {
-            let tableView = UITableView(frame: .zero, style: .plain)
-            self.view.addSubview(tableView)
-            return tableView
-        }()
-
+    func addTableViewToView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-
+        self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints{ make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.equalTo(self.view.safeAreaLayoutGuide)
             make.right.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.bannerView.snp.top)
-        }
-
-
-
-    }
-
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        self.bannerView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
 
