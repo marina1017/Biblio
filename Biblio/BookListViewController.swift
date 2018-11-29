@@ -26,12 +26,21 @@ class BookListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.title = "テスト"
+        self.navigationItem.title = "テスト"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.leftBarBtnClicked))
         //広告バナー
         self.addBannerViewToView()
         //TableView
         self.addTableViewToView()
 
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+        }
     }
 
     func addBannerViewToView() {
@@ -55,6 +64,11 @@ class BookListViewController: UIViewController {
             make.right.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(self.bannerView.snp.top)
         }
+    }
+
+    //左側のボタンが押されたら呼ばれる
+    @objc func leftBarBtnClicked(){
+        print("leftBarBtnClicked")
     }
 
 
