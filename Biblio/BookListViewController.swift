@@ -8,8 +8,9 @@
 
 import UIKit
 import GoogleMobileAds
+import SnapKit
 
-class ViewController: UIViewController {
+class BookListViewController: UIViewController {
 
     var bannerView: GADBannerView!
 

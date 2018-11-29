@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
+    //起動時に実行される関数
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         //Firebaseの広告周り
@@ -22,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.configure(withApplicationID: "ca-app-pub-3940256099942544~1458002511")
 
         //ストーリーボードなしで実装
-        let first: ViewController = ViewController()
-        first.view.backgroundColor = UIColor.white
-        let navigationController = UINavigationController(rootViewController: first)
+        let bookListViewController = BookListViewController()
+        bookListViewController.view.backgroundColor = UIColor.white
+        let navigationController = UINavigationController(rootViewController: bookListViewController)
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()

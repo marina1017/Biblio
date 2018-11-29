@@ -25,10 +25,12 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - SnapKit (4.0.0)
 
 DEPENDENCIES:
   - Firebase/AdMob
   - Firebase/Core
+  - SnapKit (~> 4.0.0)
 
 SPEC CHECKSUMS:
   Firebase: 25ed0412036d7d008568d1fb4d2e9d81ea8a0a2c
@@ -38,7 +40,8 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 4f07d8144121bbf0bc160a9f51e2e3be5b98a96f
+PODFILE CHECKSUM: 31fb54f65c28f2bb8fb99d4c876e462808989290
 
 COCOAPODS: 1.4.0
