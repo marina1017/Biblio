@@ -22,7 +22,7 @@ class BookListViewController: UIViewController {
         return tableView
     }()
 
-    let items = ["Apple","Banana","Orange"]
+    var items = ["Apple","Banana","Orange"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +77,13 @@ class BookListViewController: UIViewController {
 extension BookListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected! \(self.items[indexPath.row])")
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.items.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 
 }
