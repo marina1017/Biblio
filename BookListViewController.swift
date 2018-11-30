@@ -17,6 +17,7 @@ class BookListViewController: UIViewController {
         bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
         return bannerView
     }()
+
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .plain)
         return tableView
@@ -57,6 +58,10 @@ class BookListViewController: UIViewController {
     func addTableViewToView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        //セルの登録
+        self.tableView.register(BookCell.self, forCellReuseIdentifier: NSStringFromClass(BookCell.self))
+        self.tableView.estimatedRowHeight = 20
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints{ make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -85,7 +90,6 @@ extension BookListViewController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-
 }
 
 extension BookListViewController: UITableViewDataSource {
@@ -99,10 +103,10 @@ extension BookListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-            ?? UITableViewCell(style: .default, reuseIdentifier: "Cell")
 
-        cell.textLabel?.text = self.items[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(BookCell.self), for: indexPath) as? BookCell else {
+            return UITableViewCell(frame: .zero)
+        }
 
         return cell
     }
