@@ -108,6 +108,7 @@ extension BookListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(BookCell.self), for: indexPath) as? BookCell else {
             return UITableViewCell(frame: .zero)
         }
+        cell.accessoryType = .disclosureIndicator
 
         return cell
     }
