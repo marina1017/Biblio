@@ -26,6 +26,13 @@ class BookCell : UITableViewCell {
         return label
     }()
 
+    let progressView: UIView = {
+        let progressView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        progressView.backgroundColor = UIColor.red
+
+        return progressView
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.commonInit()
@@ -38,6 +45,7 @@ class BookCell : UITableViewCell {
     private func commonInit() {
         self.addSubview(self.bookNameLabel)
         self.addSubview(self.deadlineLabel)
+        self.addSubview(self.progressView)
     }
 
 
@@ -51,6 +59,8 @@ class BookCell : UITableViewCell {
         super.layoutSubviews()
         self.layoutBookNameLabel()
         self.layoutDeadlineLabel()
+
+        self.layoutProgressView()
     }
 
     private func layoutBookNameLabel() {
@@ -65,10 +75,19 @@ class BookCell : UITableViewCell {
     private func layoutDeadlineLabel() {
         self.deadlineLabel.snp.makeConstraints{ make in
             make.top.equalTo(self.bookNameLabel.snp.bottom)
-            //make.height.equalTo(Appearance.size.extraLarge)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(self.progressView.snp.top)
+        }
+    }
+
+    private func layoutProgressView() {
+        self.progressView.snp.makeConstraints{ make in
+            //make.top.equalTo(self.deadlineLabel.snp.bottom)
+            make.height.equalTo(Appearance.size.default)
+            make.left.equalToSuperview().offset(Appearance.size.small)
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview().offset(Appearance.size.small)
         }
     }
 }
