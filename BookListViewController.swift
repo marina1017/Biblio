@@ -23,7 +23,7 @@ class BookListViewController: UIViewController {
         return tableView
     }()
 
-    var items = ["Apple","Banana","Orange"]
+    var items = ["Apple","Banana","Orange","Orange","Orange","Orange"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,6 +110,22 @@ extension BookListViewController: UITableViewDataSource {
         }
         cell.accessoryType = .disclosureIndicator
 
+        //dummy text
+        var dummyString = "01234567890"
+        for i in 0...indexPath.row {
+            dummyString += dummyString
+        }
+        //set text
+        cell.bookNameLabel.text = "index : \(indexPath.row), dummyString : \(dummyString)"
+        //セルの高さ自動計算に必要
+
+        cell.layoutIfNeeded()
+
         return cell
     }
+
+
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension //変更
+//    }
 }
