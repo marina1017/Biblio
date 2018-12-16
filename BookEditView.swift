@@ -1,5 +1,5 @@
 //
-//  BookViewControlelr.swift
+//  BookEditView.swift
 //  Biblio
 //
 //  Created by nakagawa on 2018/12/16.
@@ -9,7 +9,7 @@
 import UIKit
 import fluid_slider
 
-class BookViewController: UIViewController {
+class BookEditView: UIView {
     let bookNameLabel: UILabel = {
         let label = UILabel()
         label.text = "本のタイトル"
@@ -103,28 +103,21 @@ class BookViewController: UIViewController {
         return slider
     }()
 
-    override func loadView() {
-        super.loadView()
-        self.view.backgroundColor = .white
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.commonInit()
         self.deadlineTextFiled.inputView = self.deadlineDatePicker
         // 決定バーの生成
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 35))
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 35))
         let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         toolbar.setItems([spacelItem, doneItem], animated: true)
 
         // インプットビュー設定
         deadlineTextFiled.inputAccessoryView = toolbar
-
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-
-    // 決定ボタン押下
+    //決定ボタン押下
     @objc func done() {
         deadlineTextFiled.endEditing(true)
 
@@ -134,13 +127,17 @@ class BookViewController: UIViewController {
         deadlineTextFiled.text = "\(formatter.string(from: Date()))"
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private func commonInit() {
-        self.view.addSubview(self.bookNameLabel)
-        self.view.addSubview(self.bookNameTextFiled)
-        self.view.addSubview(self.deadlineLabel)
-        self.view.addSubview(self.deadlineTextFiled)
-        self.view.addSubview(self.pageDescriptionLabel)
-        self.view.addSubview(self.slider)
+        self.addSubview(self.bookNameLabel)
+        self.addSubview(self.bookNameTextFiled)
+        self.addSubview(self.deadlineLabel)
+        self.addSubview(self.deadlineTextFiled)
+        self.addSubview(self.pageDescriptionLabel)
+        self.addSubview(self.slider)
 
         self.layoutBookNameLabel()
         self.layoutBookNameTextFiled()
@@ -152,7 +149,7 @@ class BookViewController: UIViewController {
 
     private func layoutBookNameLabel() {
         self.bookNameLabel.snp.makeConstraints{ make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(Appearance.size.extraLarge)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(Appearance.size.extraLarge)
             make.height.equalTo(20)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
@@ -201,10 +198,10 @@ class BookViewController: UIViewController {
 
     private func layoutSlider() {
         self.slider.snp.makeConstraints{ make in
+            make.top.equalTo(self.pageDescriptionLabel.snp.bottom).offset(50)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.small)
-            make.height.equalTo(50)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-(self.view.frame.size.height/3))
+            make.height.equalTo(40)
         }
     }
 }

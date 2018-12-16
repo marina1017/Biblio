@@ -73,7 +73,13 @@ class BookListViewController: UIViewController {
 
     //左側のボタンが押されたら呼ばれる
     @objc func leftBarBtnClicked(){
-        print("leftBarBtnClicked")
+        let second = BookEditViewController()
+        //遷移先のMealViewControllerに遷移元のself(MealTableViewController)を渡しておく
+        //second.originViewController = self
+        //遷移する前にナビゲーションコントローラーのインスタンスに遷移先のViewContorollerを入れる
+        let navVC = UINavigationController(rootViewController:second)
+        //ナビゲーションコントローラーの渡してモーダル遷移を行う
+        self.present(navVC, animated: true, completion: nil)
     }
 
 
@@ -83,7 +89,7 @@ extension BookListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected! \(self.items[indexPath.row])")
         self.tableView.deselectRow(at: indexPath, animated: true)
-        let bookViewController = BookViewController()
+        let bookViewController = BookEditViewController()
         self.navigationController?.pushViewController(bookViewController, animated: true)
     }
 
