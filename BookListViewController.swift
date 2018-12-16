@@ -118,14 +118,9 @@ extension BookListViewController: UITableViewDataSource {
         //set text
         cell.bookNameLabel.text = "index : \(indexPath.row), dummyString : \(dummyString)"
         //セルの高さ自動計算に必要
-
         cell.layoutIfNeeded()
 
         return cell
     }
 
-
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension //変更
-//    }
 }
