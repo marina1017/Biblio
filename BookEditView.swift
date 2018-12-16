@@ -64,20 +64,8 @@ class BookEditView: UIView {
         return label
     }()
 
-    let totalPageTextFiled:UITextField = {
-        var textFiled = UITextField()
-        textFiled.placeholder = "総ページ数を入力"
-        textFiled.font = Appearance.font.label(15, weight: .semibold)
-        textFiled.borderStyle = .roundedRect
-        textFiled.enablesReturnKeyAutomatically = true
-        textFiled.keyboardType = UIKeyboardType.emailAddress
-        textFiled.returnKeyType = UIReturnKeyType.done
-        textFiled.keyboardAppearance = UIKeyboardAppearance.alert
-        textFiled.textContentType = UITextContentType.emailAddress
-        textFiled.translatesAutoresizingMaskIntoConstraints = false
-
-        return textFiled
-    }()
+    //数値の範囲（1...10という記法）を配列にする
+    var pageNumberArray:[Int] = ([Int])(0...1000)
 
     var pageNumberDatePickerView: UIPickerView = {
         var pickerView = UIPickerView()
@@ -100,26 +88,19 @@ class BookEditView: UIView {
         return datePicker
     }()
 
+    let labelStringAttributes: [NSAttributedString.Key : Any] = [
+        .foregroundColor : UIColor.white,
+        .font : UIFont.boldSystemFont(ofSize: 15.0)
+    ]
+    let textStringAttributes: [NSAttributedString.Key : Any] = [
+        .foregroundColor : UIColor(red: 34/255.0, green: 139/255.0, blue: 34/255.0, alpha: 1),
+        .font : UIFont.systemFont(ofSize: 15.0)
+    ]
+
+
     let slider: Slider = {
         let slider = Slider()
-        let textStringAttributes: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor(red: 34/255.0, green: 139/255.0, blue: 34/255.0, alpha: 1),
-            .font : UIFont.systemFont(ofSize: 15.0)
-        ]
-        let labelStringAttributes: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor.white,
-            .font : UIFont.boldSystemFont(ofSize: 15.0)
-        ]
-        slider.attributedTextForFraction = { fraction in
-            let formatter = NumberFormatter()
-            formatter.maximumIntegerDigits = 3
-            formatter.maximumFractionDigits = 0
-            let string = formatter.string(from: (fraction * 500) as NSNumber) ?? ""
-            return NSAttributedString(string: string, attributes: textStringAttributes)
-        }
-        slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelStringAttributes))
-        slider.setMaximumLabelAttributedText(NSAttributedString(string: "500", attributes: labelStringAttributes))
-        slider.fraction = 0.5
+        slider.fraction = 0
         slider.shadowOffset = CGSize(width: 0, height: 10)
         slider.shadowBlur = 5
         slider.shadowColor = UIColor(white: 0, alpha: 0.1)
@@ -132,7 +113,7 @@ class BookEditView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
-        self.deadlineTextFiled.inputView = self.deadlineDatePicker
+
         // 決定バーの生成
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 35))
         let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -140,7 +121,19 @@ class BookEditView: UIView {
         toolbar.setItems([spacelItem, doneItem], animated: true)
 
         // インプットビュー設定
-        deadlineTextFiled.inputAccessoryView = toolbar
+        self.deadlineTextFiled.inputAccessoryView = toolbar
+        self.deadlineTextFiled.inputView = self.deadlineDatePicker
+
+        // スライダー設定
+        self.slider.attributedTextForFraction = { fraction in
+            let formatter = NumberFormatter()
+            formatter.maximumIntegerDigits = 3
+            formatter.maximumFractionDigits = 0
+            let string = formatter.string(from: (fraction * 500) as NSNumber) ?? ""
+            return NSAttributedString(string: string, attributes: self.textStringAttributes)
+        }
+        self.slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: self.labelStringAttributes))
+        self.slider.setMaximumLabelAttributedText(NSAttributedString(string: "500", attributes: self.labelStringAttributes))
     }
 
     //決定ボタン押下
@@ -216,7 +209,7 @@ class BookEditView: UIView {
             make.top.equalTo(self.deadlineLabel.snp.bottom).offset(Appearance.size.small)
             make.height.equalTo(40)
             make.left.equalToSuperview().offset(Appearance.size.small)
-            make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
+            make.right.equalToSuperview().offset(-Appearance.size.small)
             make.bottom.equalTo(self.totalPageLabel.snp.top).offset(-Appearance.size.extraLarge)
         }
     }
@@ -228,7 +221,7 @@ class BookEditView: UIView {
             make.height.equalTo(40)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
-            make.bottom.equalTo(self.pageNumberDatePickerView.snp.top).offset(-Appearance.size.extraLarge)
+            make.bottom.equalTo(self.pageNumberDatePickerView.snp.top).offset(-Appearance.size.small)
         }
     }
 
@@ -236,7 +229,7 @@ class BookEditView: UIView {
     private func layoutPageNumberDatePickerView() {
         self.pageNumberDatePickerView.snp.makeConstraints{ make in
             make.top.equalTo(self.totalPageLabel.snp.bottom).offset(Appearance.size.small)
-            make.height.equalTo(40)
+            make.height.equalTo(60)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
             make.bottom.equalTo(self.pageDescriptionLabel.snp.top).offset(-Appearance.size.extraLarge)

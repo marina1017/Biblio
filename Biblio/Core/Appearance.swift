@@ -79,7 +79,6 @@ final class Appearance {
     static let size = Appearance.Size()
     static let color = Appearance.Color()
 
-
 }
 
 extension UIColor {
