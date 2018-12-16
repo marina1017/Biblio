@@ -27,7 +27,7 @@ class BookListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "テスト"
+        self.navigationItem.title = "読書リスト"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.leftBarBtnClicked))
         //広告バナー
         self.addBannerViewToView()
@@ -83,6 +83,8 @@ extension BookListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected! \(self.items[indexPath.row])")
         self.tableView.deselectRow(at: indexPath, animated: true)
+        let bookViewController = BookViewController()
+        self.navigationController?.pushViewController(bookViewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

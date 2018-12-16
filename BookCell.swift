@@ -9,7 +9,6 @@
 import UIKit
 import SnapKit
 import fluid_slider
-import WOWMarkSlider
 
 class BookCell : UITableViewCell {
     let bookNameLabel: UILabel = {
@@ -31,8 +30,6 @@ class BookCell : UITableViewCell {
 
     let progressView: UIView = {
         let progressView = UIView()
-        //progressView.backgroundColor = UIColor.red
-        progressView.sizeToFit()
         return progressView
     }()
 
@@ -63,17 +60,6 @@ class BookCell : UITableViewCell {
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
-
-//    let slider: WOWMarkSlider = {
-//        let slider = WOWMarkSlider()
-//        slider.markColor = UIColor.red
-//        slider.markWidth = 2.0
-//        slider.markPositions = [30, 50, 80]
-//        slider.lineCap = .square
-//        slider.height = 7.0
-//        return slider
-//    }()
-
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
