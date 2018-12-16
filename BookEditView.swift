@@ -56,6 +56,34 @@ class BookEditView: UIView {
         return textFiled
     }()
 
+    let totalPageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "総ページ数"
+        label.font = Appearance.font.label(15, weight: .semibold)
+        label.textColor = Appearance.color.font
+        return label
+    }()
+
+    let totalPageTextFiled:UITextField = {
+        var textFiled = UITextField()
+        textFiled.placeholder = "総ページ数を入力"
+        textFiled.font = Appearance.font.label(15, weight: .semibold)
+        textFiled.borderStyle = .roundedRect
+        textFiled.enablesReturnKeyAutomatically = true
+        textFiled.keyboardType = UIKeyboardType.emailAddress
+        textFiled.returnKeyType = UIReturnKeyType.done
+        textFiled.keyboardAppearance = UIKeyboardAppearance.alert
+        textFiled.textContentType = UITextContentType.emailAddress
+        textFiled.translatesAutoresizingMaskIntoConstraints = false
+
+        return textFiled
+    }()
+
+    var pageNumberDatePickerView: UIPickerView = {
+        var pickerView = UIPickerView()
+        return pickerView
+    }()
+
     let pageDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "読了ページ数"
@@ -69,8 +97,6 @@ class BookEditView: UIView {
         datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.current
-
-
         return datePicker
     }()
 
@@ -136,6 +162,8 @@ class BookEditView: UIView {
         self.addSubview(self.bookNameTextFiled)
         self.addSubview(self.deadlineLabel)
         self.addSubview(self.deadlineTextFiled)
+        self.addSubview(self.totalPageLabel)
+        self.addSubview(self.pageNumberDatePickerView)
         self.addSubview(self.pageDescriptionLabel)
         self.addSubview(self.slider)
 
@@ -143,10 +171,13 @@ class BookEditView: UIView {
         self.layoutBookNameTextFiled()
         self.layoutDeadlineLabel()
         self.layoutDeadlineTextFiled()
+        self.layoutTotalPageLabel()
+        self.layoutPageNumberDatePickerView()
         self.layoutPageDescriptionLabel()
         self.layoutSlider()
     }
 
+    //本のタイトルの説明ラベル
     private func layoutBookNameLabel() {
         self.bookNameLabel.snp.makeConstraints{ make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(Appearance.size.extraLarge)
@@ -157,6 +188,7 @@ class BookEditView: UIView {
         }
     }
 
+    //本のタイトル記入テキストフィールド
     private func layoutBookNameTextFiled() {
         self.bookNameTextFiled.snp.makeConstraints{ make in
             make.top.equalTo(self.bookNameLabel.snp.bottom).offset(Appearance.size.small)
@@ -167,6 +199,7 @@ class BookEditView: UIView {
         }
     }
 
+    //読了達成目標日の説明ラベル
     private func layoutDeadlineLabel() {
         self.deadlineLabel.snp.makeConstraints{ make in
             make.top.equalTo(self.bookNameTextFiled.snp.bottom).offset(Appearance.size.extraLarge)
@@ -177,9 +210,32 @@ class BookEditView: UIView {
         }
     }
 
+    //読了達成目標日記入テキストフィールド
     private func layoutDeadlineTextFiled() {
         self.deadlineTextFiled.snp.makeConstraints{ make in
             make.top.equalTo(self.deadlineLabel.snp.bottom).offset(Appearance.size.small)
+            make.height.equalTo(40)
+            make.left.equalToSuperview().offset(Appearance.size.small)
+            make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
+            make.bottom.equalTo(self.totalPageLabel.snp.top).offset(-Appearance.size.extraLarge)
+        }
+    }
+
+    //総ページ数説明ラベル
+    private func layoutTotalPageLabel() {
+        self.totalPageLabel.snp.makeConstraints{ make in
+            make.top.equalTo(self.deadlineTextFiled.snp.bottom).offset(Appearance.size.small)
+            make.height.equalTo(40)
+            make.left.equalToSuperview().offset(Appearance.size.small)
+            make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
+            make.bottom.equalTo(self.pageNumberDatePickerView.snp.top).offset(-Appearance.size.extraLarge)
+        }
+    }
+
+    //総ページ数記入テキストフィールド
+    private func layoutPageNumberDatePickerView() {
+        self.pageNumberDatePickerView.snp.makeConstraints{ make in
+            make.top.equalTo(self.totalPageLabel.snp.bottom).offset(Appearance.size.small)
             make.height.equalTo(40)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
@@ -187,15 +243,17 @@ class BookEditView: UIView {
         }
     }
 
+    //読了ページ数説明ラベル
     private func layoutPageDescriptionLabel() {
         self.pageDescriptionLabel.snp.makeConstraints{ make in
-            make.top.equalTo(self.deadlineTextFiled.snp.bottom).offset(Appearance.size.extraLarge)
+            make.top.equalTo(self.pageNumberDatePickerView.snp.bottom).offset(Appearance.size.extraLarge)
             make.height.equalTo(20)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.small)
         }
     }
 
+    //スライダー
     private func layoutSlider() {
         self.slider.snp.makeConstraints{ make in
             make.top.equalTo(self.pageDescriptionLabel.snp.bottom).offset(50)

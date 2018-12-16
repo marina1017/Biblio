@@ -11,6 +11,7 @@ import fluid_slider
 import SnapKit
 
 class BookEditViewController: UIViewController {
+    
     let bookEditView: BookEditView = {
         let bookEditView = BookEditView()
         return bookEditView
