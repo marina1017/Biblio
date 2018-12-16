@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import fluid_slider
+import WOWMarkSlider
 
 class BookCell : UITableViewCell {
     let bookNameLabel: UILabel = {
@@ -29,11 +31,49 @@ class BookCell : UITableViewCell {
 
     let progressView: UIView = {
         let progressView = UIView()
-        progressView.backgroundColor = UIColor.red
+        //progressView.backgroundColor = UIColor.red
         progressView.sizeToFit()
-
         return progressView
     }()
+
+    let slider: Slider = {
+        let slider = Slider()
+        let textStringAttributes: [NSAttributedString.Key : Any] = [
+            .foregroundColor : UIColor(red: 34/255.0, green: 139/255.0, blue: 34/255.0, alpha: 1),
+            .font : UIFont.systemFont(ofSize: 10.0)
+        ]
+        let labelStringAttributes: [NSAttributedString.Key : Any] = [
+            .foregroundColor : UIColor.white,
+            .font : UIFont.boldSystemFont(ofSize: 10.0)
+        ]
+        slider.attributedTextForFraction = { fraction in
+            let formatter = NumberFormatter()
+            formatter.maximumIntegerDigits = 3
+            formatter.maximumFractionDigits = 0
+            let string = formatter.string(from: (fraction * 500) as NSNumber) ?? ""
+            return NSAttributedString(string: string, attributes: textStringAttributes)
+        }
+        slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelStringAttributes))
+        slider.setMaximumLabelAttributedText(NSAttributedString(string: "500", attributes: labelStringAttributes))
+        slider.fraction = 0.5
+        slider.isAnimationEnabled = false
+        slider.isEnabled = false
+        slider.contentViewColor = UIColor(red: 34/255.0, green: 139/255.0, blue: 34/255.0, alpha: 1)
+        slider.valueViewColor = .white
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        return slider
+    }()
+
+//    let slider: WOWMarkSlider = {
+//        let slider = WOWMarkSlider()
+//        slider.markColor = UIColor.red
+//        slider.markWidth = 2.0
+//        slider.markPositions = [30, 50, 80]
+//        slider.lineCap = .square
+//        slider.height = 7.0
+//        return slider
+//    }()
+
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -48,6 +88,7 @@ class BookCell : UITableViewCell {
         self.addSubview(self.bookNameLabel)
         self.addSubview(self.deadlineLabel)
         self.addSubview(self.progressView)
+        self.progressView.addSubview(self.slider)
     }
 
     override func updateConstraints() {
@@ -61,13 +102,14 @@ class BookCell : UITableViewCell {
         self.layoutBookNameLabel()
         self.layoutDeadlineLabel()
         self.layoutProgressView()
+        self.layoutSlider()
     }
 
     private func layoutBookNameLabel() {
         self.bookNameLabel.snp.makeConstraints{ make in
             make.top.equalToSuperview().offset(Appearance.size.small)
             make.left.equalToSuperview().offset(Appearance.size.small)
-            make.right.equalToSuperview().offset(-Appearance.size.small)
+            make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
             make.bottom.equalTo(self.deadlineLabel.snp.top)
         }
     }
@@ -84,9 +126,19 @@ class BookCell : UITableViewCell {
     private func layoutProgressView() {
         self.progressView.snp.makeConstraints{ make in
             make.top.equalTo(self.deadlineLabel.snp.bottom)
-            make.height.equalTo(100)
+            make.height.equalTo(40)
             make.left.equalToSuperview().offset(Appearance.size.small)
-            make.right.equalToSuperview().offset(-Appearance.size.small)
+            make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
+            make.bottom.equalToSuperview().offset(-Appearance.size.small)
+        }
+    }
+
+    private func layoutSlider() {
+        self.slider.snp.makeConstraints{ make in
+            make.top.equalToSuperview().offset(Appearance.size.small)
+            make.height.equalTo(5)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
