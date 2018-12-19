@@ -8,5 +8,8 @@ target 'Biblio' do
    pod 'Firebase/AdMob'
    pod 'SnapKit', '~> 4.0.0'
    pod 'fluid-slider'
-   pod 'WOWMarkSlider'
+   target  'BiblioTests' do
+        inherit! :search_paths
+        pod 'Firebase'
+    end
 end

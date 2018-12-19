@@ -1,4 +1,6 @@
 PODS:
+  - Firebase (5.2.0):
+    - Firebase/Core (= 5.2.0)
   - Firebase/AdMob (5.2.0):
     - Firebase/Core
     - Google-Mobile-Ads-SDK (= 7.31.0)
@@ -29,14 +31,13 @@ PODS:
   - nanopb/encode (0.3.8)
   - pop (1.0.10)
   - SnapKit (4.0.0)
-  - WOWMarkSlider (0.1.7)
 
 DEPENDENCIES:
+  - Firebase
   - Firebase/AdMob
   - Firebase/Core
   - fluid-slider
   - SnapKit (~> 4.0.0)
-  - WOWMarkSlider
 
 SPEC CHECKSUMS:
   Firebase: 25ed0412036d7d008568d1fb4d2e9d81ea8a0a2c
@@ -49,8 +50,7 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  WOWMarkSlider: 690025805287b6ed65b5f0771e4143800a53cf7d
 
-PODFILE CHECKSUM: 6a3324f9d9877e5b7d0d077a0ac64e7d277f0170
+PODFILE CHECKSUM: f8cbcf9e2354e88e8d2458c6278ed3c5232bc677
 
 COCOAPODS: 1.4.0
