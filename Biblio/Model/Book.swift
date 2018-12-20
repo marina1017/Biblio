@@ -13,6 +13,7 @@ class Book: NSObject, NSCoding {
     var bookName: String = ""
     var targetDate: String = ""
     var totalPageNumber: Int = 0
+    var sliderFlaction: CGFloat = 0
     var currentPage: Int = 0
 
     //MARK: Properties
@@ -20,6 +21,7 @@ class Book: NSObject, NSCoding {
         static let bookName = "name"
         static let targetDate = "targetDate"
         static let totalPageNumber = "totalPageNumber"
+        static let sliderFlaction = "sliderFlaction"
         static let currentPage = "currentPage"
     }
 
@@ -27,7 +29,7 @@ class Book: NSObject, NSCoding {
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("book")
 
     //MARK: 初期化
-    init?(bookName: String, targetDate: String, totalPageNumber: Int, currentPage: Int) {
+    init?(bookName: String, targetDate: String, totalPageNumber: Int, sliderFlaction: CGFloat ,currentPage: Int) {
         //nameに何も入ってない時
         guard !bookName.isEmpty else {
             return nil
@@ -37,6 +39,7 @@ class Book: NSObject, NSCoding {
         self.bookName = bookName
         self.targetDate = targetDate
         self.totalPageNumber = totalPageNumber
+        self.sliderFlaction = sliderFlaction
         self.currentPage = currentPage
     }
 
@@ -44,6 +47,7 @@ class Book: NSObject, NSCoding {
         aCoder.encode(self.bookName, forKey: PropertyKey.bookName)
         aCoder.encode(self.targetDate, forKey: PropertyKey.targetDate)
         aCoder.encode(self.totalPageNumber, forKey: PropertyKey.totalPageNumber)
+        aCoder.encode(self.sliderFlaction, forKey: PropertyKey.sliderFlaction)
         aCoder.encode(self.currentPage, forKey: PropertyKey.currentPage)
     }
 
@@ -59,10 +63,13 @@ class Book: NSObject, NSCoding {
 
         let totalPageNumber = aDecoder.decodeInteger(forKey: PropertyKey.totalPageNumber)
 
+        let sliderFlaction = CGFloat(aDecoder.decodeInteger(forKey: PropertyKey.sliderFlaction))
+
         let currentPage = aDecoder.decodeInteger(forKey: PropertyKey.currentPage)
 
+
         //指定された初期化子を呼び出さなければならない
-        self.init(bookName: bookName, targetDate: targetDate, totalPageNumber: totalPageNumber, currentPage: currentPage)
+        self.init(bookName: bookName, targetDate: targetDate, totalPageNumber: totalPageNumber, sliderFlaction: sliderFlaction, currentPage: currentPage)
     }
 
 

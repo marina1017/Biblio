@@ -59,13 +59,7 @@ class BookEditViewController: UIViewController {
             self.bookEditView.bookNameTextFiled.text = book.bookName
             self.bookEditView.deadlineTextFiled.text = book.targetDate
             self.bookEditView.pageNumberDatePickerView.selectRow(book.totalPageNumber, inComponent: 0, animated: true)
-            self.bookEditView.slider.attributedTextForFraction = { fraction in
-                let formatter = NumberFormatter()
-                formatter.maximumIntegerDigits = 3
-                formatter.maximumFractionDigits = 0
-                let string = formatter.string(from: (fraction * CGFloat(book.currentPage)) as NSNumber) ?? ""
-                return NSAttributedString(string: string, attributes: self.bookEditView.textStringAttributes)
-            }
+            self.bookEditView.slider.fraction = book.sliderFlaction
 
         }
 
@@ -89,9 +83,10 @@ class BookEditViewController: UIViewController {
         var bookName: String = self.bookEditView.bookNameTextFiled.text ?? ""
         var targetDate: String = self.bookEditView.deadlineTextFiled.text ?? ""
         var totalPageNumber: Int = self.selectedValue
+        var sliderFraction: CGFloat = self.bookEditView.slider.fraction
         var currentPage: Int = Int(self.bookEditView.slider.attributedTextForFraction(self.bookEditView.slider.fraction).string) ?? 100
 
-        book = Book(bookName: bookName, targetDate: targetDate, totalPageNumber: totalPageNumber, currentPage: currentPage)
+        book = Book(bookName: bookName, targetDate: targetDate, totalPageNumber: totalPageNumber, sliderFlaction: sliderFraction, currentPage: currentPage)
 
         //現在モーダル遷移かプッシュ遷移どちらで表示されているのか判定する
         let isPresentingIndAddMealMode = presentingViewController is UINavigationController
