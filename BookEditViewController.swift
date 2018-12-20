@@ -50,12 +50,16 @@ class BookEditViewController: UIViewController {
 
         //bookにデータが入っている場合
         if let book = self.book {
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: Appearance.font.sliderLabel(),
+                .foregroundColor: Appearance.color.sliderLabel
+            ]
             self.navigationItem.title = book.bookName
             self.bookEditView.bookNameTextFiled.text = book.bookName
             self.bookEditView.deadlineTextFiled.text = book.targetDate
             self.bookEditView.pageNumberDatePickerView.selectRow(book.totalPageNumber, inComponent: 0, animated: true)
             self.bookEditView.slider.fraction = book.sliderFlaction
-
+            self.bookEditView.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: attributes))
         }
     }
 
