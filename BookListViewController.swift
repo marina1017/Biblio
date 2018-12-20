@@ -64,7 +64,7 @@ class BookListViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        self.tableView.reloadData()
     }
 
     func addBannerViewToView() {
@@ -81,7 +81,6 @@ class BookListViewController: UIViewController {
     func addTableViewToView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        //セルの登録
         self.tableView.register(BookCell.self, forCellReuseIdentifier: NSStringFromClass(BookCell.self))
         self.tableView.estimatedRowHeight = 20
         self.tableView.rowHeight = UITableView.automaticDimension
@@ -185,15 +184,13 @@ extension BookListViewController: UITableViewDataSource {
         let book = books[indexPath.row]
         cell.bookNameLabel.text = book.bookName
         cell.deadlineLabel.text = book.targetDate
-        cell.slider.fraction = CGFloat(book.currentPage / book.totalPageNumber)
+        cell.slider.fraction = CGFloat(book.currentPage) / CGFloat(book.totalPageNumber)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: Appearance.font.sliderLabel(),
+            .foregroundColor: Appearance.color.sliderLabel
+        ]
+        cell.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: attributes))
 
-//        //dummy text
-//        var dummyString = "01234567890"
-//        for i in 0...indexPath.row {
-//            dummyString += dummyString
-//        }
-//        //set text
-//        cell.bookNameLabel.text = "index : \(indexPath.row), dummyString : \(dummyString)"
         //セルの高さ自動計算に必要
         cell.layoutIfNeeded()
 

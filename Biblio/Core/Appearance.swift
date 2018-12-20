@@ -25,6 +25,10 @@ final class Appearance {
         func button(_ size: CGFloat = UIFont.buttonFontSize, weight: UIFont.Weight = .regular) -> UIFont {
             return Appearance.font.default(size, weight: weight)
         }
+
+        func sliderLabel(_ size: CGFloat = UIFont.smallSystemFontSize, weight: UIFont.Weight = .regular) -> UIFont {
+            return Appearance.font.default(size, weight:weight)
+        }
     }
 
     struct Margin {
@@ -70,7 +74,8 @@ final class Appearance {
 
     struct Color {
         let background = UIColor.format(hex: 0xf0f0f0)
-
+        let sliderLabel = UIColor.format(hex: 0xf0f0f0)
+        let slider = UIColor.format(hex: 0x228b22)
         let font = UIColor.format(hex: 0x303030)
     }
 

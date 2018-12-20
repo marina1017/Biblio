@@ -89,12 +89,12 @@ class BookEditView: UIView {
     }()
 
     let labelStringAttributes: [NSAttributedString.Key : Any] = [
-        .foregroundColor : UIColor.white,
-        .font : UIFont.boldSystemFont(ofSize: 15.0)
+        .foregroundColor : Appearance.color.sliderLabel,
+        .font : Appearance.font.sliderLabel(15)
     ]
     let textStringAttributes: [NSAttributedString.Key : Any] = [
-        .foregroundColor : UIColor(red: 34/255.0, green: 139/255.0, blue: 34/255.0, alpha: 1),
-        .font : UIFont.systemFont(ofSize: 15.0)
+        .foregroundColor : Appearance.color.slider,
+        .font : Appearance.font.sliderLabel(15)
     ]
 
 
@@ -104,9 +104,17 @@ class BookEditView: UIView {
         slider.shadowOffset = CGSize(width: 0, height: 10)
         slider.shadowBlur = 5
         slider.shadowColor = UIColor(white: 0, alpha: 0.1)
-        slider.contentViewColor = UIColor(red: 34/255.0, green: 139/255.0, blue: 34/255.0, alpha: 1)
+        slider.contentViewColor = Appearance.color.slider
         slider.valueViewColor = .white
         slider.translatesAutoresizingMaskIntoConstraints = false
+        slider.didBeginTracking = { slider in
+
+            print("///////slider",slider)
+        }
+        slider.didEndTracking = { slider in
+
+            print("///////slider",slider)
+        }
         return slider
     }()
 
@@ -256,3 +264,8 @@ class BookEditView: UIView {
         }
     }
 }
+
+//class BiblioSlider: Slider {
+//
+//    override var contentView
+//}

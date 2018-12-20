@@ -89,7 +89,7 @@ class BookEditViewController: UIViewController {
         var bookName: String = self.bookEditView.bookNameTextFiled.text ?? ""
         var targetDate: String = self.bookEditView.deadlineTextFiled.text ?? ""
         var totalPageNumber: Int = self.selectedValue
-        var currentPage: Int = 50
+        var currentPage: Int = Int(self.bookEditView.slider.attributedTextForFraction(self.bookEditView.slider.fraction).string) ?? 100
 
         book = Book(bookName: bookName, targetDate: targetDate, totalPageNumber: totalPageNumber, currentPage: currentPage)
 
