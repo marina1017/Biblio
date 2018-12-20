@@ -11,7 +11,7 @@
 		C00B62A821B0262100A8CD56 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C00B62A721B0262100A8CD56 /* GoogleService-Info.plist */; };
 		C02ACFA621C6274C004757DA /* BookEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02ACFA521C6274C004757DA /* BookEditViewController.swift */; };
 		C02ACFA821C641D0004757DA /* BookEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02ACFA721C641D0004757DA /* BookEditView.swift */; };
-		C03AE90821B19921001497F2 /* UISlider+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AE90721B19921001497F2 /* UISlider+extension.swift */; };
+		C02ACFAB21C67B94004757DA /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02ACFAA21C67B94004757DA /* Book.swift */; };
 		C0ADED2721B049A0006D9C98 /* BookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADED2621B049A0006D9C98 /* BookCell.swift */; };
 		C0ADED2921B173F5006D9C98 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADED2821B173F5006D9C98 /* Appearance.swift */; };
 		C0BFCD0821B018B30051CCD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BFCD0721B018B30051CCD7 /* AppDelegate.swift */; };
@@ -27,7 +27,7 @@
 		C00B62A721B0262100A8CD56 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C02ACFA521C6274C004757DA /* BookEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookEditViewController.swift; sourceTree = "<group>"; };
 		C02ACFA721C641D0004757DA /* BookEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookEditView.swift; sourceTree = "<group>"; };
-		C03AE90721B19921001497F2 /* UISlider+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISlider+extension.swift"; sourceTree = "<group>"; };
+		C02ACFAA21C67B94004757DA /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		C0ADED2621B049A0006D9C98 /* BookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCell.swift; sourceTree = "<group>"; };
 		C0ADED2821B173F5006D9C98 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		C0BFCD0421B018B30051CCD7 /* Biblio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biblio.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,11 +67,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C02ACFA921C67B6C004757DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C02ACFAA21C67B94004757DA /* Book.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		C0ADED2A21B1744E006D9C98 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				C0ADED2821B173F5006D9C98 /* Appearance.swift */,
-				C03AE90721B19921001497F2 /* UISlider+extension.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -117,6 +124,7 @@
 		C0BFCD0621B018B30051CCD7 /* Biblio */ = {
 			isa = PBXGroup;
 			children = (
+				C02ACFA921C67B6C004757DA /* Model */,
 				C0BFCD0721B018B30051CCD7 /* AppDelegate.swift */,
 				C0ADED2A21B1744E006D9C98 /* Core */,
 				C0ADED2C21B1747F006D9C98 /* Controllers */,
@@ -279,11 +287,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C02ACFAB21C67B94004757DA /* Book.swift in Sources */,
 				C0BFCD0A21B018B30051CCD7 /* BookListViewController.swift in Sources */,
 				C02ACFA821C641D0004757DA /* BookEditView.swift in Sources */,
 				C02ACFA621C6274C004757DA /* BookEditViewController.swift in Sources */,
 				C0ADED2721B049A0006D9C98 /* BookCell.swift in Sources */,
-				C03AE90821B19921001497F2 /* UISlider+extension.swift in Sources */,
 				C0BFCD0821B018B30051CCD7 /* AppDelegate.swift in Sources */,
 				C0ADED2921B173F5006D9C98 /* Appearance.swift in Sources */,
 			);

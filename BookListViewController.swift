@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMobileAds
 import SnapKit
+import os.log
 
 class BookListViewController: UIViewController {
 
@@ -23,7 +24,7 @@ class BookListViewController: UIViewController {
         return tableView
     }()
 
-    var items = ["Apple","Banana","Orange","Orange","Orange","Orange"]
+    var books = [Book]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,21 +35,43 @@ class BookListViewController: UIViewController {
         //TableView
         self.addTableViewToView()
 
+        //データの呼び出し
+        if let savedBooks = loadBooks() {
+            self.books += savedBooks
+        }
+
+
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        //よくわからんがviewWillAppearだとリロードが間に合わなかった
+        self.tableView.reloadData()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
+
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
     }
 
     func addBannerViewToView() {
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
+        self.bannerView.rootViewController = self
+        self.bannerView.load(GADRequest())
         self.bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(self.bannerView)
+        self.view.addSubview(self.bannerView)
         self.bannerView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
@@ -75,11 +98,48 @@ class BookListViewController: UIViewController {
     @objc func leftBarBtnClicked(){
         let second = BookEditViewController()
         //遷移先のMealViewControllerに遷移元のself(MealTableViewController)を渡しておく
-        //second.originViewController = self
+        second.originViewController = self
         //遷移する前にナビゲーションコントローラーのインスタンスに遷移先のViewContorollerを入れる
         let navVC = UINavigationController(rootViewController:second)
         //ナビゲーションコントローラーの渡してモーダル遷移を行う
         self.present(navVC, animated: true, completion: nil)
+    }
+
+    //MealViewControllerから戻ってきた時mealsにデータを入れる
+    func unwindToMealList(sourceViewController: BookEditViewController) {
+
+        if let book = sourceViewController.book {
+            // booksの配列に新しいデータを入れる
+            let newIndexPath = IndexPath(row: books.count, section: 0)
+            books.append(book)
+            saveBooks()
+            self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
+    }
+
+    //すでに入っているデータを修正する
+    func fixToMealList(sourceViewController: BookEditViewController, indexPath: IndexPath) {
+        if let book = sourceViewController.book {
+            // mealsの配列に新しいデータを入れる
+            self.books[indexPath.row] = book
+            saveBooks()
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+
+    //データの永続化 meals を保存するタイミングになったらこのメソッドを呼び出す
+    //このメソッドには保存できる形式にした Meal オブジェクトを適切な場所に保存する処理をかく
+    private func saveBooks() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(books, toFile: Book.ArchiveURL.path)
+        if isSuccessfulSave {
+            os_log("保存が成功しました", log: OSLog.default, type: .debug)
+        } else {
+            os_log("保存が失敗しました", log:OSLog.default, type: .error)
+        }
+    }
+
+    private func loadBooks() -> [Book]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Book.ArchiveURL.path) as? [Book]
     }
 
 
@@ -87,15 +147,19 @@ class BookListViewController: UIViewController {
 
 extension BookListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected! \(self.items[indexPath.row])")
+        //セルの選択解除
         self.tableView.deselectRow(at: indexPath, animated: true)
         let bookViewController = BookEditViewController()
+        bookViewController.originViewController = self
+        let selectedBook = books[indexPath.row]
+        bookViewController.book = selectedBook
+        bookViewController.selectedIndexPath = indexPath
         self.navigationController?.pushViewController(bookViewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            self.items.remove(at: indexPath.row)
+            self.books.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -108,7 +172,7 @@ extension BookListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        return self.books.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,13 +182,18 @@ extension BookListViewController: UITableViewDataSource {
         }
         cell.accessoryType = .disclosureIndicator
 
-        //dummy text
-        var dummyString = "01234567890"
-        for i in 0...indexPath.row {
-            dummyString += dummyString
-        }
-        //set text
-        cell.bookNameLabel.text = "index : \(indexPath.row), dummyString : \(dummyString)"
+        let book = books[indexPath.row]
+        cell.bookNameLabel.text = book.bookName
+        cell.deadlineLabel.text = book.targetDate
+        cell.slider.fraction = CGFloat(book.currentPage / book.totalPageNumber)
+
+//        //dummy text
+//        var dummyString = "01234567890"
+//        for i in 0...indexPath.row {
+//            dummyString += dummyString
+//        }
+//        //set text
+//        cell.bookNameLabel.text = "index : \(indexPath.row), dummyString : \(dummyString)"
         //セルの高さ自動計算に必要
         cell.layoutIfNeeded()
 

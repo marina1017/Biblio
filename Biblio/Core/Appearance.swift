@@ -63,7 +63,7 @@ final class Appearance {
         }
 
         var extraLarge: CGFloat {
-            return 30
+            return 35
         }
 
     }
