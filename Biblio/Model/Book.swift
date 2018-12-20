@@ -44,10 +44,11 @@ class Book: NSObject, NSCoding {
     }
 
     func encode(with aCoder: NSCoder) {
+        let sliderFlaction = Float(self.sliderFlaction)
         aCoder.encode(self.bookName, forKey: PropertyKey.bookName)
         aCoder.encode(self.targetDate, forKey: PropertyKey.targetDate)
         aCoder.encode(self.totalPageNumber, forKey: PropertyKey.totalPageNumber)
-        aCoder.encode(self.sliderFlaction, forKey: PropertyKey.sliderFlaction)
+        aCoder.encode(sliderFlaction, forKey: PropertyKey.sliderFlaction)
         aCoder.encode(self.currentPage, forKey: PropertyKey.currentPage)
     }
 
@@ -63,7 +64,7 @@ class Book: NSObject, NSCoding {
 
         let totalPageNumber = aDecoder.decodeInteger(forKey: PropertyKey.totalPageNumber)
 
-        let sliderFlaction = CGFloat(aDecoder.decodeInteger(forKey: PropertyKey.sliderFlaction))
+        let sliderFlaction = CGFloat(aDecoder.decodeDouble(forKey: PropertyKey.sliderFlaction))
 
         let currentPage = aDecoder.decodeInteger(forKey: PropertyKey.currentPage)
 

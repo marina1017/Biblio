@@ -23,6 +23,7 @@ class BookEditViewController: UIViewController {
     
     let bookEditView: BookEditView = {
         let bookEditView = BookEditView()
+
         return bookEditView
     }()
 
@@ -34,6 +35,7 @@ class BookEditViewController: UIViewController {
         self.bookEditView.snp.makeConstraints{ make in
             make.edges.equalToSuperview()
         }
+        self.navigationController?.delegate = self
     }
 
     override func viewDidLoad() {
@@ -44,14 +46,7 @@ class BookEditViewController: UIViewController {
         self.bookEditView.pageNumberDatePickerView.selectRow(500, inComponent: 0, animated: true)
 
         //MARK: ナビゲーションバーの設定
-        self.navigationController!.setNavigationBarHidden(false, animated: false)
-        saveButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: self, action: #selector(BookEditViewController.tappedRightBarButton))
-        self.navigationItem.rightBarButtonItem = self.saveButton
-        if self.presentingViewController != nil {
-            self.navigationItem.title = "新規追加"
-            cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(BookEditViewController.tappedLeftBarButton))
-            self.navigationItem.leftBarButtonItem = self.cancelButton
-        }
+        self.initNavigationController()
 
         //bookにデータが入っている場合
         if let book = self.book {
@@ -62,10 +57,26 @@ class BookEditViewController: UIViewController {
             self.bookEditView.slider.fraction = book.sliderFlaction
 
         }
+    }
 
+    func initNavigationController() {
+        guard let navigationController = self.navigationController else {
+            return
+        }
+        navigationController.setNavigationBarHidden(false, animated: false)
 
+        guard self.presentingViewController != nil else {
+            return
+        }
+
+        self.navigationItem.title = "新規追加"
+        saveButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: self, action: #selector(BookEditViewController.tappedRightBarButton))
+        self.navigationItem.rightBarButtonItem = self.saveButton
+        cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(BookEditViewController.tappedLeftBarButton))
+        self.navigationItem.leftBarButtonItem = self.cancelButton
 
     }
+
     //MARK: キーボードが出ている状態で、キーボード以外をタップしたらキーボードを閉じる
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //非表示にする。
@@ -79,17 +90,10 @@ class BookEditViewController: UIViewController {
         //キーボードをしまう
         self.bookEditView.bookNameTextFiled.resignFirstResponder()
 
-        //変更されたデータを入れる
-        var bookName: String = self.bookEditView.bookNameTextFiled.text ?? ""
-        var targetDate: String = self.bookEditView.deadlineTextFiled.text ?? ""
-        var totalPageNumber: Int = self.selectedValue
-        var sliderFraction: CGFloat = self.bookEditView.slider.fraction
-        var currentPage: Int = Int(self.bookEditView.slider.attributedTextForFraction(self.bookEditView.slider.fraction).string) ?? 100
-
-        book = Book(bookName: bookName, targetDate: targetDate, totalPageNumber: totalPageNumber, sliderFlaction: sliderFraction, currentPage: currentPage)
+        self.saveBook()
 
         //現在モーダル遷移かプッシュ遷移どちらで表示されているのか判定する
-        let isPresentingIndAddMealMode = presentingViewController is UINavigationController
+        let isPresentingIndAddMealMode = self.presentingViewController is UINavigationController
         //モーダルの時に実行する関数
         if isPresentingIndAddMealMode {
             self.originViewController.unwindToMealList(sourceViewController: self)
@@ -105,32 +109,25 @@ class BookEditViewController: UIViewController {
 
     }
 
+    func saveBook(){
+        //変更されたデータを入れる
+        let bookName: String = self.bookEditView.bookNameTextFiled.text ?? ""
+        let targetDate: String = self.bookEditView.deadlineTextFiled.text ?? ""
+        let totalPageNumber: Int = self.selectedValue
+        let sliderFraction: CGFloat = self.bookEditView.slider.fraction
+        let currentPage: Int = Int(self.bookEditView.slider.attributedTextForFraction(self.bookEditView.slider.fraction).string) ?? 0
+
+        book = Book(bookName: bookName, targetDate: targetDate, totalPageNumber: totalPageNumber, sliderFlaction: sliderFraction, currentPage: currentPage)
+    }
+
     //MARK: キャンセルボタンをタップしたときのアクション
     @objc func tappedLeftBarButton() {
         self.dismiss(animated: true, completion: nil)
-
-    }
-
-    //MARK: エディットボタンをタップしたときのアクション
-    @objc func tappedEditButton() {
-//        //キーボードをしまう
-//        self.myStackView.textFiled.resignFirstResponder()
-//
-//        let name = self.myStackView.textFiled.text ?? ""
-//        let photo = self.myStackView.imageView.image
-//        let rating = self.myStackView.ratingControllView.rating
-//
-//        meal = Meal(name: name, photo: photo, rating: rating)
-//
-//        self.originViewController.fixToMealList(sourceViewController: self, indexPath: self.selectedIndexPath)
     }
 }
 
 extension BookEditViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
-
-        //label.text = textField.text
-
         // キーボードを閉じる
         textField.resignFirstResponder()
         return true
@@ -145,8 +142,6 @@ extension BookEditViewController: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.bookEditView.pageNumberArray.count
     }
-
-
 }
 
 extension BookEditViewController: UIPickerViewDelegate {
@@ -179,5 +174,17 @@ extension BookEditViewController: UIPickerViewDelegate {
             return NSAttributedString(string: string, attributes: self.bookEditView.textStringAttributes)
         }
     }
+}
 
+extension BookEditViewController: UINavigationControllerDelegate {
+
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController is BookListViewController {
+            //キーボードをしまう
+            self.bookEditView.bookNameTextFiled.resignFirstResponder()
+
+            self.saveBook()
+            self.originViewController.fixToMealList(sourceViewController: self, indexPath: self.selectedIndexPath)
+        }
+    }
 }
