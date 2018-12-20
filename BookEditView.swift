@@ -82,7 +82,7 @@ class BookEditView: UIView {
 
     var deadlineDatePicker: UIDatePicker = {
         var datePicker = UIDatePicker()
-        datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
+        datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.current
         return datePicker
@@ -107,14 +107,6 @@ class BookEditView: UIView {
         slider.contentViewColor = Appearance.color.slider
         slider.valueViewColor = .white
         slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.didBeginTracking = { slider in
-
-            print("///////slider",slider)
-        }
-        slider.didEndTracking = { slider in
-
-            print("///////slider",slider)
-        }
         return slider
     }()
 
@@ -150,7 +142,7 @@ class BookEditView: UIView {
 
         // 日付のフォーマット
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "dMMM", options: 0, locale: Locale(identifier: "ja_JP"))
         deadlineTextFiled.text = "\(formatter.string(from: Date()))"
     }
 
@@ -264,8 +256,3 @@ class BookEditView: UIView {
         }
     }
 }
-
-//class BiblioSlider: Slider {
-//
-//    override var contentView
-//}

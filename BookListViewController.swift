@@ -21,6 +21,8 @@ class BookListViewController: UIViewController {
 
     var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .plain)
+//        tableView.isEditing = true
+//        tableView.allowsSelectionDuringEditing = true
         return tableView
     }()
 
@@ -45,13 +47,11 @@ class BookListViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        //よくわからんがviewWillAppearだとリロードが間に合わなかった
-        self.tableView.reloadData()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        self.tableView.reloadData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -162,6 +162,17 @@ extension BookListViewController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
+
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        //sourceIndexPath にデータの元の位置、destinationIndexPath に移動先の位置
+        //CellValueを取得
+        if let book: Book = books[sourceIndexPath.row] {
+            //元の位置のデータを配列から削除
+            books.remove(at:sourceIndexPath.row)
+            //移動先の位置にデータを配列に挿入
+            books.insert(book, at: destinationIndexPath.row)
+        }
+    }
 }
 
 extension BookListViewController: UITableViewDataSource {
@@ -173,6 +184,11 @@ extension BookListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.books.count
     }
+
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
