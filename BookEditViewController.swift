@@ -50,17 +50,13 @@ class BookEditViewController: UIViewController {
 
         //bookにデータが入っている場合
         if let book = self.book {
-            let attributes: [NSAttributedString.Key: Any] = [
-                .font: Appearance.font.sliderLabel(),
-                .foregroundColor: Appearance.color.sliderLabel
-            ]
             self.navigationItem.title = book.bookName
             self.bookEditView.bookNameTextFiled.text = book.bookName
             self.bookEditView.deadlineTextFiled.text = book.targetDate
             self.selectedValue = book.totalPageNumber
             self.bookEditView.pageNumberDatePickerView.selectRow(book.totalPageNumber, inComponent: 0, animated: true)
             self.bookEditView.slider.fraction = book.sliderFlaction
-            self.bookEditView.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: attributes))
+            self.bookEditView.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: Appearance.attribute.labelStringAttributes()))
         }
     }
 
@@ -85,8 +81,12 @@ class BookEditViewController: UIViewController {
     //MARK: キーボードが出ている状態で、キーボード以外をタップしたらキーボードを閉じる
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //非表示にする。
-        if(self.bookEditView.bookNameTextFiled.isFirstResponder){
+        if self.bookEditView.bookNameTextFiled.isFirstResponder {
             self.bookEditView.bookNameTextFiled.resignFirstResponder()
+        }
+
+        if self.bookEditView.deadlineTextFiled.isFirstResponder {
+            self.bookEditView.deadlineTextFiled.resignFirstResponder()
         }
     }
 
@@ -106,7 +106,7 @@ class BookEditViewController: UIViewController {
         }
             //プッシュの時に実行する関数
         else if let owingNavigationController = navigationController {
-            self.originViewController.fixToMealList(sourceViewController: self, indexPath: self.selectedIndexPath)
+            self.originViewController.fixToBookList(sourceViewController: self, indexPath: self.selectedIndexPath)
         }
 
         else {
@@ -170,15 +170,15 @@ extension BookEditViewController: UIPickerViewDelegate {
     // UIPickerViewのRowが選択された時の挙動
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedValue = row
-        
 
-        self.bookEditView.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(row), attributes: self.bookEditView.labelStringAttributes))
+
+        self.bookEditView.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(row), attributes: Appearance.attribute.labelStringAttributes()))
         self.bookEditView.slider.attributedTextForFraction = { fraction in
             let formatter = NumberFormatter()
             formatter.maximumIntegerDigits = 3
             formatter.maximumFractionDigits = 0
             let string = formatter.string(from: (fraction * CGFloat(row)) as NSNumber) ?? ""
-            return NSAttributedString(string: string, attributes: self.bookEditView.textStringAttributes)
+            return NSAttributedString(string: string, attributes: Appearance.attribute.textStringAttributes())
         }
     }
 }
@@ -191,7 +191,7 @@ extension BookEditViewController: UINavigationControllerDelegate {
             self.bookEditView.bookNameTextFiled.resignFirstResponder()
 
             self.saveBook()
-            self.originViewController.fixToMealList(sourceViewController: self, indexPath: self.selectedIndexPath)
+            self.originViewController.fixToBookList(sourceViewController: self, indexPath: self.selectedIndexPath)
         }
     }
 }

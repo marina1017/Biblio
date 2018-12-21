@@ -22,7 +22,15 @@ class BookCell : UITableViewCell {
 
     let deadlineLabel: UILabel = {
         let label = UILabel()
-        label.text = "10月10日まで"
+        label.text = "読了目標日10月10日"
+        label.font = Appearance.font.label(10, weight: .light)
+        label.textColor = Appearance.color.font
+        return label
+    }()
+
+    let scheduleSuggestLabel: UILabel = {
+        let label = UILabel()
+        label.text = "本日５ｐ読めば目標を達成できます"
         label.font = Appearance.font.label(10, weight: .light)
         label.textColor = Appearance.color.font
         return label
@@ -35,23 +43,16 @@ class BookCell : UITableViewCell {
 
     let slider: Slider = {
         let slider = Slider()
-        let textStringAttributes: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor(red: 34/255.0, green: 139/255.0, blue: 34/255.0, alpha: 1),
-            .font : UIFont.systemFont(ofSize: 10.0)
-        ]
-        let labelStringAttributes: [NSAttributedString.Key : Any] = [
-            .foregroundColor : UIColor.white,
-            .font : UIFont.boldSystemFont(ofSize: 10.0)
-        ]
         slider.attributedTextForFraction = { fraction in
             let formatter = NumberFormatter()
             formatter.maximumIntegerDigits = 3
             formatter.maximumFractionDigits = 0
             let string = formatter.string(from: (fraction * 500) as NSNumber) ?? ""
-            return NSAttributedString(string: string, attributes: textStringAttributes)
+            //ここでは10
+            return NSAttributedString(string: string, attributes: Appearance.attribute.textStringAttributes(10))
         }
-        slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelStringAttributes))
-        slider.setMaximumLabelAttributedText(NSAttributedString(string: "500", attributes: labelStringAttributes))
+        slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: Appearance.attribute.labelStringAttributes(10)))
+        slider.setMaximumLabelAttributedText(NSAttributedString(string: "500", attributes: Appearance.attribute.labelStringAttributes(10)))
         slider.fraction = 0.5
         slider.isAnimationEnabled = false
         slider.isEnabled = false
@@ -73,6 +74,7 @@ class BookCell : UITableViewCell {
     private func commonInit() {
         self.addSubview(self.bookNameLabel)
         self.addSubview(self.deadlineLabel)
+        self.addSubview(self.scheduleSuggestLabel)
         self.addSubview(self.progressView)
         self.progressView.addSubview(self.slider)
     }
@@ -87,6 +89,7 @@ class BookCell : UITableViewCell {
         super.layoutSubviews()
         self.layoutBookNameLabel()
         self.layoutDeadlineLabel()
+        self.layoutScheduleSuggestLabel()
         self.layoutProgressView()
         self.layoutSlider()
     }
@@ -105,13 +108,22 @@ class BookCell : UITableViewCell {
             make.top.equalTo(self.bookNameLabel.snp.bottom)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.small)
+            make.bottom.equalTo(self.scheduleSuggestLabel.snp.top)
+        }
+    }
+
+    private func layoutScheduleSuggestLabel() {
+        self.scheduleSuggestLabel.snp.makeConstraints{ make in
+            make.top.equalTo(self.deadlineLabel.snp.bottom)
+            make.left.equalToSuperview().offset(Appearance.size.small)
+            make.right.equalToSuperview().offset(-Appearance.size.small)
             make.bottom.equalTo(self.progressView.snp.top)
         }
     }
 
     private func layoutProgressView() {
         self.progressView.snp.makeConstraints{ make in
-            make.top.equalTo(self.deadlineLabel.snp.bottom)
+            make.top.equalTo(self.scheduleSuggestLabel.snp.bottom)
             make.height.equalTo(40)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.extraLarge)

@@ -88,17 +88,9 @@ class BookEditView: UIView {
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.current
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: UIControl.Event.valueChanged)
         return datePicker
     }()
-
-    let labelStringAttributes: [NSAttributedString.Key : Any] = [
-        .foregroundColor : Appearance.color.sliderLabel,
-        .font : Appearance.font.sliderLabel(15)
-    ]
-    let textStringAttributes: [NSAttributedString.Key : Any] = [
-        .foregroundColor : Appearance.color.slider,
-        .font : Appearance.font.sliderLabel(15)
-    ]
 
 
     let slider: Slider = {
@@ -110,43 +102,34 @@ class BookEditView: UIView {
         slider.contentViewColor = Appearance.color.slider
         slider.valueViewColor = .white
         slider.translatesAutoresizingMaskIntoConstraints = false
+        // スライダー設定
+        slider.attributedTextForFraction = { fraction in
+            let formatter = NumberFormatter()
+            formatter.maximumIntegerDigits = 3
+            formatter.maximumFractionDigits = 0
+            let string = formatter.string(from: (fraction * 500) as NSNumber) ?? ""
+            return NSAttributedString(string: string, attributes: Appearance.attribute.textStringAttributes())
+        }
+        slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes:Appearance.attribute.labelStringAttributes()))
+        slider.setMaximumLabelAttributedText(NSAttributedString(string: "500", attributes: Appearance.attribute.labelStringAttributes()))
+
         return slider
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
-
-        // 決定バーの生成
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 35))
-        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        toolbar.setItems([spacelItem, doneItem], animated: true)
-
-        // インプットビュー設定
-        self.deadlineTextFiled.inputAccessoryView = toolbar
         self.deadlineTextFiled.inputView = self.deadlineDatePicker
 
-        // スライダー設定
-        self.slider.attributedTextForFraction = { fraction in
-            let formatter = NumberFormatter()
-            formatter.maximumIntegerDigits = 3
-            formatter.maximumFractionDigits = 0
-            let string = formatter.string(from: (fraction * 500) as NSNumber) ?? ""
-            return NSAttributedString(string: string, attributes: self.textStringAttributes)
-        }
-        self.slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: self.labelStringAttributes))
-        self.slider.setMaximumLabelAttributedText(NSAttributedString(string: "500", attributes: self.labelStringAttributes))
+
     }
 
-    //決定ボタン押下
-    @objc func done() {
-        deadlineTextFiled.endEditing(true)
-
-        // 日付のフォーマット
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "dMMM", options: 0, locale: Locale(identifier: "ja_JP"))
-        deadlineTextFiled.text = "\(formatter.string(from: Date()))"
+    //datepickerが選択されたらtextfieldに表示
+    @objc func datePickerValueChanged(sender:UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat  = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
+        self.deadlineTextFiled.text = dateFormatter.string(from: sender.date)
+        self.deadlineTextFiled.endEditing(true)
     }
 
     required init?(coder aDecoder: NSCoder) {

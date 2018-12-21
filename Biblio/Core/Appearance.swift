@@ -79,10 +79,23 @@ final class Appearance {
         let font = UIColor.format(hex: 0x303030)
     }
 
+    struct Attribute {
+        func labelStringAttributes(_ size: CGFloat = 15) -> [NSAttributedString.Key : Any] {
+            return [.foregroundColor : Appearance.color.sliderLabel,
+                    .font : Appearance.font.sliderLabel(size)]
+        }
+
+        func textStringAttributes(_ size: CGFloat = 15) -> [NSAttributedString.Key : Any] {
+            return [.foregroundColor : Appearance.color.slider,
+                    .font : Appearance.font.sliderLabel(size)]
+        }
+    }
+
     static let font = Appearance.Font()
     static let margin = Appearance.Margin()
     static let size = Appearance.Size()
     static let color = Appearance.Color()
+    static let attribute = Appearance.Attribute()
 
 }
 

@@ -30,7 +30,7 @@ class BookListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "読書リスト"
+        self.navigationItem.title = "読んでるリスト"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.leftBarBtnClicked))
         //広告バナー
         self.addBannerViewToView()
@@ -117,7 +117,7 @@ class BookListViewController: UIViewController {
     }
 
     //すでに入っているデータを修正する
-    func fixToMealList(sourceViewController: BookEditViewController, indexPath: IndexPath) {
+    func fixToBookList(sourceViewController: BookEditViewController, indexPath: IndexPath) {
         if let book = sourceViewController.book {
             // mealsの配列に新しいデータを入れる
             self.books[indexPath.row] = book
@@ -199,13 +199,14 @@ extension BookListViewController: UITableViewDataSource {
 
         let book = books[indexPath.row]
         cell.bookNameLabel.text = book.bookName
-        cell.deadlineLabel.text = book.targetDate
+        cell.deadlineLabel.text = "読了目標日: " + book.targetDate
+        let now = NSDate()
+//        let span = book.targetDate.timeIntervalSinceDate(now) // 1209600秒差
+//        let daySpan = span/60/60/24 // 14 (日)
+//        let calculatedPage = (book.totalPageNumber - book.currentPage)
+//        cell.scheduleSuggestLabel.text = "本日\()ページ読めば達成できます"
         cell.slider.fraction = book.sliderFlaction
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: Appearance.font.sliderLabel(),
-            .foregroundColor: Appearance.color.sliderLabel
-        ]
-        cell.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: attributes))
+        cell.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: Appearance.attribute.labelStringAttributes()))
 
         //セルの高さ自動計算に必要
         cell.layoutIfNeeded()
