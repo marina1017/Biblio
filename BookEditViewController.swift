@@ -170,6 +170,7 @@ extension BookEditViewController: UIPickerViewDelegate {
     // UIPickerViewのRowが選択された時の挙動
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedValue = row
+        
 
         self.bookEditView.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(row), attributes: self.bookEditView.labelStringAttributes))
         self.bookEditView.slider.attributedTextForFraction = { fraction in

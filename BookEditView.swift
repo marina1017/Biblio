@@ -43,7 +43,10 @@ class BookEditView: UIView {
 
     let deadlineTextFiled: UITextField = {
         var textFiled = UITextField()
-        textFiled.placeholder = "読了達成目標日を入力"
+        // 日付のフォーマット
+        let formatter = DateFormatter()
+        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "dMMM", options: 0, locale: Locale(identifier: "ja_JP"))
+        textFiled.text = "\(formatter.string(from: Date()))"
         textFiled.font = Appearance.font.label(15, weight: .semibold)
         textFiled.borderStyle = .roundedRect
         textFiled.enablesReturnKeyAutomatically = true
@@ -231,7 +234,7 @@ class BookEditView: UIView {
             make.top.equalTo(self.totalPageLabel.snp.bottom).offset(Appearance.size.small)
             make.height.equalTo(60)
             make.left.equalToSuperview().offset(Appearance.size.small)
-            make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
+            make.right.equalToSuperview().offset(-Appearance.size.small)
             make.bottom.equalTo(self.pageDescriptionLabel.snp.top).offset(-Appearance.size.extraLarge)
         }
     }
