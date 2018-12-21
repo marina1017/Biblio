@@ -163,16 +163,16 @@ extension BookListViewController: UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        //sourceIndexPath にデータの元の位置、destinationIndexPath に移動先の位置
-        //CellValueを取得
-        if let book: Book = books[sourceIndexPath.row] {
-            //元の位置のデータを配列から削除
-            books.remove(at:sourceIndexPath.row)
-            //移動先の位置にデータを配列に挿入
-            books.insert(book, at: destinationIndexPath.row)
-        }
-    }
+//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//        //sourceIndexPath にデータの元の位置、destinationIndexPath に移動先の位置
+//        //CellValueを取得
+//        if let book: Book = books[sourceIndexPath.row] {
+//            //元の位置のデータを配列から削除
+//            books.remove(at:sourceIndexPath.row)
+//            //移動先の位置にデータを配列に挿入
+//            books.insert(book, at: destinationIndexPath.row)
+//        }
+//    }
 }
 
 extension BookListViewController: UITableViewDataSource {
@@ -200,7 +200,7 @@ extension BookListViewController: UITableViewDataSource {
         let book = books[indexPath.row]
         cell.bookNameLabel.text = book.bookName
         cell.deadlineLabel.text = book.targetDate
-        cell.slider.fraction = CGFloat(book.currentPage) / CGFloat(book.totalPageNumber)
+        cell.slider.fraction = book.sliderFlaction
         let attributes: [NSAttributedString.Key: Any] = [
             .font: Appearance.font.sliderLabel(),
             .foregroundColor: Appearance.color.sliderLabel

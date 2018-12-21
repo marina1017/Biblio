@@ -19,7 +19,7 @@ class BookEditViewController: UIViewController {
     var selectedIndexPath: IndexPath!
 
     var book: Book?
-    var selectedValue: Int = 500
+    var selectedValue: Int = 400
     
     let bookEditView: BookEditView = {
         let bookEditView = BookEditView()
@@ -43,7 +43,7 @@ class BookEditViewController: UIViewController {
         self.bookEditView.bookNameTextFiled.delegate = self
         self.bookEditView.pageNumberDatePickerView.dataSource = self
         self.bookEditView.pageNumberDatePickerView.delegate = self
-        self.bookEditView.pageNumberDatePickerView.selectRow(500, inComponent: 0, animated: true)
+        self.bookEditView.pageNumberDatePickerView.selectRow(self.selectedValue, inComponent: 0, animated: true)
 
         //MARK: ナビゲーションバーの設定
         self.initNavigationController()
@@ -57,6 +57,7 @@ class BookEditViewController: UIViewController {
             self.navigationItem.title = book.bookName
             self.bookEditView.bookNameTextFiled.text = book.bookName
             self.bookEditView.deadlineTextFiled.text = book.targetDate
+            self.selectedValue = book.totalPageNumber
             self.bookEditView.pageNumberDatePickerView.selectRow(book.totalPageNumber, inComponent: 0, animated: true)
             self.bookEditView.slider.fraction = book.sliderFlaction
             self.bookEditView.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: attributes))
@@ -107,6 +108,7 @@ class BookEditViewController: UIViewController {
         else if let owingNavigationController = navigationController {
             self.originViewController.fixToMealList(sourceViewController: self, indexPath: self.selectedIndexPath)
         }
+
         else {
             fatalError("The MealViewController is not inside a navigation controller.")
         }
