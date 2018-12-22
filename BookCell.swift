@@ -56,7 +56,7 @@ class BookCell : UITableViewCell {
         slider.fraction = 0.5
         slider.isAnimationEnabled = false
         slider.isEnabled = false
-        slider.contentViewColor = UIColor(red: 34/255.0, green: 139/255.0, blue: 34/255.0, alpha: 1)
+        slider.contentViewColor = Appearance.color.slider
         slider.valueViewColor = .white
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider

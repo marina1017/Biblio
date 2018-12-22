@@ -51,6 +51,8 @@ class BookListViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        // FIXME
+        // この関数をここで実行するべきではなさそうだけどしょうがなくここで実行
         self.tableView.reloadData()
     }
 
@@ -59,12 +61,10 @@ class BookListViewController: UIViewController {
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.tableView.reloadData()
     }
 
     func addBannerViewToView() {
@@ -193,7 +193,7 @@ extension BookListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(BookCell.self), for: indexPath) as? BookCell else {
-            return UITableViewCell(frame: .zero)
+            return UITableViewCell(style: .subtitle, reuseIdentifier: NSStringFromClass(BookCell.self))
         }
         cell.accessoryType = .disclosureIndicator
 
