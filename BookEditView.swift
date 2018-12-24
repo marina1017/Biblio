@@ -211,7 +211,7 @@ class BookEditView: UIView {
     //総ページ数説明ラベル
     private func layoutTotalPageLabel() {
         self.totalPageLabel.snp.makeConstraints{ make in
-            make.top.equalTo(self.deadlineTextFiled.snp.bottom).offset(Appearance.size.small)
+            make.top.equalTo(self.deadlineTextFiled.snp.bottom).offset(Appearance.size.extraLarge)
             make.height.equalTo(40)
             make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
