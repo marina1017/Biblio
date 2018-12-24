@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import fluid_slider
+import Slider
 
 protocol UIPickerDelegate {
     func datePickerDidChanged(valueDidChanged: Date) -> Void

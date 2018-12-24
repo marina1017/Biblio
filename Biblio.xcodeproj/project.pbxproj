@@ -13,6 +13,9 @@
 		C02ACFA821C641D0004757DA /* BookEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02ACFA721C641D0004757DA /* BookEditView.swift */; };
 		C02ACFAB21C67B94004757DA /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02ACFAA21C67B94004757DA /* Book.swift */; };
 		C06EC62621D0B82B002B6411 /* DrawerController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06EC62521D0B82B002B6411 /* DrawerController.framework */; };
+		C06EC62921D0BA47002B6411 /* Slider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06EC62821D0BA47002B6411 /* Slider.framework */; };
+		C06EC62B21D0BA55002B6411 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06EC62A21D0BA55002B6411 /* SnapKit.framework */; };
+		C06EC62D21D0BB6B002B6411 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06EC62C21D0BB6B002B6411 /* pop.framework */; };
 		C0ADED2721B049A0006D9C98 /* BookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADED2621B049A0006D9C98 /* BookCell.swift */; };
 		C0ADED2921B173F5006D9C98 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADED2821B173F5006D9C98 /* Appearance.swift */; };
 		C0BFCD0821B018B30051CCD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BFCD0721B018B30051CCD7 /* AppDelegate.swift */; };
@@ -31,6 +34,9 @@
 		C02ACFAA21C67B94004757DA /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		C02ACFAC21CC054B004757DA /* ja-JP */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ja-JP"; path = "ja-JP.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		C06EC62521D0B82B002B6411 /* DrawerController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawerController.framework; path = Carthage/Build/iOS/DrawerController.framework; sourceTree = "<group>"; };
+		C06EC62821D0BA47002B6411 /* Slider.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Slider.framework; path = Carthage/Build/iOS/Slider.framework; sourceTree = "<group>"; };
+		C06EC62A21D0BA55002B6411 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
+		C06EC62C21D0BB6B002B6411 /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = Carthage/Build/iOS/pop.framework; sourceTree = "<group>"; };
 		C0ADED2621B049A0006D9C98 /* BookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCell.swift; sourceTree = "<group>"; };
 		C0ADED2821B173F5006D9C98 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		C0BFCD0421B018B30051CCD7 /* Biblio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biblio.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,6 +52,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C06EC62D21D0BB6B002B6411 /* pop.framework in Frameworks */,
+				C06EC62B21D0BA55002B6411 /* SnapKit.framework in Frameworks */,
+				C06EC62921D0BA47002B6411 /* Slider.framework in Frameworks */,
 				C06EC62621D0B82B002B6411 /* DrawerController.framework in Frameworks */,
 				3FB401AF3F8A0569A5A6267E /* Pods_Biblio.framework in Frameworks */,
 			);
@@ -66,6 +75,9 @@
 		B26F77CE12593B7B156349E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C06EC62C21D0BB6B002B6411 /* pop.framework */,
+				C06EC62A21D0BA55002B6411 /* SnapKit.framework */,
+				C06EC62821D0BA47002B6411 /* Slider.framework */,
 				C06EC62521D0B82B002B6411 /* DrawerController.framework */,
 				28817DB98A20DF506E801323 /* Pods_Biblio.framework */,
 			);
@@ -240,6 +252,9 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/DrawerController.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Slider.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/pop.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -281,22 +296,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Biblio/Pods-Biblio-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/WOWMarkSlider/WOWMarkSlider.framework",
-				"${BUILT_PRODUCTS_DIR}/fluid-slider/fluid_slider.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WOWMarkSlider.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/fluid_slider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

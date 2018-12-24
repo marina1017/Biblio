@@ -16,8 +16,6 @@ PODS:
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseInstanceID (3.1.0):
     - FirebaseCore (~> 5.0)
-  - fluid-slider (0.0.6):
-    - pop
   - Google-Mobile-Ads-SDK (7.31.0)
   - GoogleToolboxForMac/Defines (2.1.4)
   - GoogleToolboxForMac/NSData+zlib (2.1.4):
@@ -27,30 +25,20 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - pop (1.0.10)
-  - SnapKit (4.0.0)
-  - WOWMarkSlider (0.1.7)
 
 DEPENDENCIES:
   - Firebase/AdMob
   - Firebase/Core
-  - fluid-slider
-  - SnapKit (~> 4.0.0)
-  - WOWMarkSlider
 
 SPEC CHECKSUMS:
   Firebase: 25ed0412036d7d008568d1fb4d2e9d81ea8a0a2c
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseCore: a3c87242451633fff8490183898075ce77d168d2
   FirebaseInstanceID: 05d779cbb97bd5bd5c51a38a903fc9cfe1b2454a
-  fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
   Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  WOWMarkSlider: 690025805287b6ed65b5f0771e4143800a53cf7d
 
-PODFILE CHECKSUM: 6a3324f9d9877e5b7d0d077a0ac64e7d277f0170
+PODFILE CHECKSUM: aedc8fefadeaa0d2d1114a2c4a30ae033e773d02
 
 COCOAPODS: 1.4.0

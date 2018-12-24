@@ -1,1 +1,3 @@
-github "sascha/DrawerController"
+github "sascha/DrawerController" == 3.1.0
+github "SnapKit/SnapKit" == 4.0.0
+github "Ramotion/fluid-slider" == 1.0.0

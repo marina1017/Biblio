@@ -8,7 +8,7 @@
 
 import UIKit
 import SnapKit
-import fluid_slider
+import Slider
 
 class BookCell : UITableViewCell {
     let bookNameLabel: UILabel = {

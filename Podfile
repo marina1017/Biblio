@@ -6,7 +6,4 @@ use_frameworks!
 target 'Biblio' do
    pod 'Firebase/Core'
    pod 'Firebase/AdMob'
-   pod 'SnapKit', '~> 4.0.0'
-   pod 'fluid-slider'
-   pod 'WOWMarkSlider'
 end

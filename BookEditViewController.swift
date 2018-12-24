@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import fluid_slider
+import Slider
 import SnapKit
 
 class BookEditViewController: UIViewController {
