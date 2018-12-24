@@ -49,11 +49,12 @@ class BookEditView: UIView {
         return label
     }()
 
+    //MARK: 読了達成目標日を設定するフィールド
     let deadlineTextFiled: UITextField = {
         var textFiled = UITextField()
         // 日付のフォーマット
         let formatter = DateFormatter()
-        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "dMMM", options: 0, locale: Locale(identifier: "ja_JP"))
+        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
         textFiled.text = "\(formatter.string(from: Date()))"
         textFiled.font = Appearance.font.label(15, weight: .semibold)
         textFiled.borderStyle = .roundedRect
@@ -65,6 +66,17 @@ class BookEditView: UIView {
         textFiled.translatesAutoresizingMaskIntoConstraints = false
 
         return textFiled
+    }()
+
+    //MARK: 読了達成目標日を設定するフィールドに使う UIDatePicker
+    var deadlineDatePicker: UIDatePicker = {
+        var datePicker = UIDatePicker()
+        datePicker.minimumDate = Date()
+        datePicker.datePickerMode = UIDatePicker.Mode.date
+        datePicker.timeZone = NSTimeZone.local
+        datePicker.locale = Locale.current
+        datePicker.addTarget(self, action: #selector(datePickerDidChanged), for: UIControl.Event.valueChanged)
+        return datePicker
     }()
 
     let totalPageLabel: UILabel = {
@@ -90,16 +102,6 @@ class BookEditView: UIView {
         label.textColor = Appearance.color.font
         return label
     }()
-
-    var deadlineDatePicker: UIDatePicker = {
-        var datePicker = UIDatePicker()
-        datePicker.datePickerMode = UIDatePicker.Mode.date
-        datePicker.timeZone = NSTimeZone.local
-        datePicker.locale = Locale.current
-        datePicker.addTarget(self, action: #selector(datePickerDidChanged), for: UIControl.Event.valueChanged)
-        return datePicker
-    }()
-
 
     let slider: Slider = {
         let slider = Slider()
@@ -137,7 +139,6 @@ class BookEditView: UIView {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat  = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
         self.deadlineTextFiled.text = dateFormatter.string(from: sender.date)
-        self.deadlineTextFiled.endEditing(true)
         self.delegate?.datePickerDidChanged(valueDidChanged: sender.date)
     }
 

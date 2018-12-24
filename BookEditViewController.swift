@@ -55,10 +55,12 @@ class BookEditViewController: UIViewController {
             self.navigationItem.title = book.bookName
             self.bookEditView.bookNameTextFiled.text = book.bookName
             self.bookEditView.deadlineTextFiled.text = book.deadline
+            self.deadlineDate = book.deadlineDate
             self.selectedValue = book.totalPageNumber
             self.bookEditView.pageNumberDatePickerView.selectRow(book.totalPageNumber, inComponent: 0, animated: true)
             self.bookEditView.slider.fraction = book.sliderFlaction
             self.bookEditView.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: Appearance.attribute.labelStringAttributes()))
+            self.bookEditView.deadlineDatePicker.setDate(book.deadlineDate, animated: true)
         }
     }
 
@@ -204,6 +206,7 @@ extension BookEditViewController: UINavigationControllerDelegate {
 extension BookEditViewController: UIPickerDelegate {
 
     func datePickerDidChanged(valueDidChanged: Date) -> Void {
+
         self.deadlineDate = valueDidChanged
     }
 }

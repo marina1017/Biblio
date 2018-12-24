@@ -201,14 +201,14 @@ extension BookListViewController: UITableViewDataSource {
         cell.bookNameLabel.text = book.bookName
         cell.deadlineLabel.text = "読了目標日: " + book.deadline
         //当日までの日数
-        getIntervalDays(date: book.deadlineDate)
+        getIntervalToday(date: book.deadlineDate)
         print("//////////////////////")
-        print("getIntervalDays(date: book.deadlineDate)",getIntervalDays(date: book.deadlineDate))
+        print("getIntervalDays(date: book.deadlineDate)",getIntervalToday(date: book.deadlineDate))
         print("book.totalPageNumber",book.totalPageNumber)
         print("book.currentPage",book.currentPage)
         //ページ数
-        if getIntervalDays(date: book.deadlineDate) != 0 {
-            let page = (book.totalPageNumber - book.currentPage) / ( Int(getIntervalDays(date: book.deadlineDate)))
+        if getIntervalToday(date: book.deadlineDate) != 0 {
+            let page = (book.totalPageNumber - book.currentPage) / ( Int(getIntervalToday(date: book.deadlineDate)))
             cell.scheduleSuggestLabel.text = "毎日\(page)ページ読めば達成できます"
         }
 
@@ -222,16 +222,11 @@ extension BookListViewController: UITableViewDataSource {
         return cell
     }
 
-    func getIntervalDays(date: Date?, anotherDay: Date? = nil) -> Double {
+    func getIntervalToday(date: Date?) -> Double {
 
         var retInterval:Double!
-
-        if anotherDay == nil {
-            retInterval = date?.timeIntervalSinceNow
-        } else {
-            retInterval = date?.timeIntervalSince(anotherDay!)
-        }
-
+        retInterval = date?.timeIntervalSinceNow
+        //現在より未来の時間は負の数になるため
         let ret = retInterval/86400
         print("///////////")
         print("date",date)
@@ -240,7 +235,7 @@ extension BookListViewController: UITableViewDataSource {
         print("Int(ret)",Int(ret))
         print("floor(ret)",floor(ret) )
 
-        return -floor(ret)  // n日
+        return floor(ret)  // n日
     }
 
 }
