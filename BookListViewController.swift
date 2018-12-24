@@ -212,7 +212,7 @@ extension BookListViewController: UITableViewDataSource {
 
 
         cell.slider.fraction = book.sliderFlaction
-        cell.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: Appearance.attribute.labelStringAttributes()))
+        cell.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: Appearance.attribute.labelStringAttributes(10)))
 
         //セルの高さ自動計算に必要
         cell.layoutIfNeeded()
