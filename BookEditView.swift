@@ -9,7 +9,15 @@
 import UIKit
 import fluid_slider
 
+protocol UIPickerDelegate {
+    func datePickerDidChanged(valueDidChanged: Date) -> Void
+}
+
 class BookEditView: UIView {
+
+    // イベントを通知する先
+    var delegate: UIPickerDelegate?
+
     let bookNameLabel: UILabel = {
         let label = UILabel()
         label.text = "本のタイトル"
@@ -88,7 +96,7 @@ class BookEditView: UIView {
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.current
-        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: UIControl.Event.valueChanged)
+        datePicker.addTarget(self, action: #selector(datePickerDidChanged), for: UIControl.Event.valueChanged)
         return datePicker
     }()
 
@@ -124,12 +132,13 @@ class BookEditView: UIView {
 
     }
 
-    //datepickerが選択されたらtextfieldに表示
-    @objc func datePickerValueChanged(sender:UIDatePicker) {
+    //MARK: 日付のdatepickerが選択されたらtextfieldに表示
+    @objc func datePickerDidChanged(sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat  = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
         self.deadlineTextFiled.text = dateFormatter.string(from: sender.date)
         self.deadlineTextFiled.endEditing(true)
+        self.delegate?.datePickerDidChanged(valueDidChanged: sender.date)
     }
 
     required init?(coder aDecoder: NSCoder) {

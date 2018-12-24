@@ -19,7 +19,8 @@ class BookEditViewController: UIViewController {
     var selectedIndexPath: IndexPath!
 
     var book: Book?
-    var selectedValue: Int = 400
+    var selectedValue: Int = 500
+    var deadlineDate: Date = Date()
     
     let bookEditView: BookEditView = {
         let bookEditView = BookEditView()
@@ -32,6 +33,7 @@ class BookEditViewController: UIViewController {
 
         self.view.backgroundColor = .white
         self.view.addSubview(self.bookEditView)
+        self.bookEditView.delegate = self
         self.bookEditView.snp.makeConstraints{ make in
             make.edges.equalToSuperview()
         }
@@ -52,7 +54,7 @@ class BookEditViewController: UIViewController {
         if let book = self.book {
             self.navigationItem.title = book.bookName
             self.bookEditView.bookNameTextFiled.text = book.bookName
-            self.bookEditView.deadlineTextFiled.text = book.targetDate
+            self.bookEditView.deadlineTextFiled.text = book.deadline
             self.selectedValue = book.totalPageNumber
             self.bookEditView.pageNumberDatePickerView.selectRow(book.totalPageNumber, inComponent: 0, animated: true)
             self.bookEditView.slider.fraction = book.sliderFlaction
@@ -118,12 +120,13 @@ class BookEditViewController: UIViewController {
     func saveBook(){
         //変更されたデータを入れる
         let bookName: String = self.bookEditView.bookNameTextFiled.text ?? ""
-        let targetDate: String = self.bookEditView.deadlineTextFiled.text ?? ""
+        let deadline: String = self.bookEditView.deadlineTextFiled.text ?? ""
+        let deadlineDate: Date = self.deadlineDate
         let totalPageNumber: Int = self.selectedValue
         let sliderFraction: CGFloat = self.bookEditView.slider.fraction
         let currentPage: Int = Int(self.bookEditView.slider.attributedTextForFraction(self.bookEditView.slider.fraction).string) ?? 0
 
-        book = Book(bookName: bookName, targetDate: targetDate, totalPageNumber: totalPageNumber, sliderFlaction: sliderFraction, currentPage: currentPage)
+        book = Book(bookName: bookName, deadline: deadline, deadlineDate: deadlineDate, totalPageNumber: totalPageNumber, sliderFlaction: sliderFraction, currentPage: currentPage)
     }
 
     //MARK: キャンセルボタンをタップしたときのアクション
@@ -150,6 +153,7 @@ extension BookEditViewController: UIPickerViewDataSource {
     }
 }
 
+//MARK: トータルページ数を決める
 extension BookEditViewController: UIPickerViewDelegate {
     //PickerViewのコンポーネントに表示するデータを決めるメソッド
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -193,5 +197,13 @@ extension BookEditViewController: UINavigationControllerDelegate {
             self.saveBook()
             self.originViewController.fixToBookList(sourceViewController: self, indexPath: self.selectedIndexPath)
         }
+    }
+}
+
+//MARK: 読了達成目標日
+extension BookEditViewController: UIPickerDelegate {
+
+    func datePickerDidChanged(valueDidChanged: Date) -> Void {
+        self.deadlineDate = valueDidChanged
     }
 }

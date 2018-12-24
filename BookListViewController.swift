@@ -82,7 +82,7 @@ class BookListViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(BookCell.self, forCellReuseIdentifier: NSStringFromClass(BookCell.self))
-        self.tableView.estimatedRowHeight = 20
+        self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableView.automaticDimension
         self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints{ make in
@@ -199,12 +199,20 @@ extension BookListViewController: UITableViewDataSource {
 
         let book = books[indexPath.row]
         cell.bookNameLabel.text = book.bookName
-        cell.deadlineLabel.text = "読了目標日: " + book.targetDate
-        let now = NSDate()
-//        let span = book.targetDate.timeIntervalSinceDate(now) // 1209600秒差
-//        let daySpan = span/60/60/24 // 14 (日)
-//        let calculatedPage = (book.totalPageNumber - book.currentPage)
-//        cell.scheduleSuggestLabel.text = "本日\()ページ読めば達成できます"
+        cell.deadlineLabel.text = "読了目標日: " + book.deadline
+        //当日までの日数
+        getIntervalDays(date: book.deadlineDate)
+        print("//////////////////////")
+        print("getIntervalDays(date: book.deadlineDate)",getIntervalDays(date: book.deadlineDate))
+        print("book.totalPageNumber",book.totalPageNumber)
+        print("book.currentPage",book.currentPage)
+        //ページ数
+        if getIntervalDays(date: book.deadlineDate) != 0 {
+            let page = (book.totalPageNumber - book.currentPage) / ( Int(getIntervalDays(date: book.deadlineDate)))
+            cell.scheduleSuggestLabel.text = "毎日\(page)ページ読めば達成できます"
+        }
+
+
         cell.slider.fraction = book.sliderFlaction
         cell.slider.setMaximumLabelAttributedText(NSAttributedString(string: String(book.totalPageNumber), attributes: Appearance.attribute.labelStringAttributes()))
 
@@ -212,6 +220,27 @@ extension BookListViewController: UITableViewDataSource {
         cell.layoutIfNeeded()
 
         return cell
+    }
+
+    func getIntervalDays(date: Date?, anotherDay: Date? = nil) -> Double {
+
+        var retInterval:Double!
+
+        if anotherDay == nil {
+            retInterval = date?.timeIntervalSinceNow
+        } else {
+            retInterval = date?.timeIntervalSince(anotherDay!)
+        }
+
+        let ret = retInterval/86400
+        print("///////////")
+        print("date",date)
+        print("retInterval",retInterval)
+        print("ret",ret)
+        print("Int(ret)",Int(ret))
+        print("floor(ret)",floor(ret) )
+
+        return -floor(ret)  // n日
     }
 
 }
