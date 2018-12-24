@@ -36,11 +36,6 @@ class BookCell : UITableViewCell {
         return label
     }()
 
-    let progressView: UIView = {
-        let progressView = UIView()
-        return progressView
-    }()
-
     let slider: Slider = {
         let slider = Slider()
         slider.attributedTextForFraction = { fraction in
@@ -75,8 +70,7 @@ class BookCell : UITableViewCell {
         self.addSubview(self.bookNameLabel)
         self.addSubview(self.deadlineLabel)
         self.addSubview(self.scheduleSuggestLabel)
-        self.addSubview(self.progressView)
-        self.progressView.addSubview(self.slider)
+        self.addSubview(self.slider)
     }
 
     override func updateConstraints() {
@@ -90,7 +84,6 @@ class BookCell : UITableViewCell {
         self.layoutBookNameLabel()
         self.layoutDeadlineLabel()
         self.layoutScheduleSuggestLabel()
-        self.layoutProgressView()
         self.layoutSlider()
     }
 
@@ -107,7 +100,7 @@ class BookCell : UITableViewCell {
         self.deadlineLabel.snp.makeConstraints{ make in
             make.top.equalTo(self.bookNameLabel.snp.bottom)
             make.left.equalToSuperview().offset(Appearance.size.small)
-            make.right.equalToSuperview().offset(-Appearance.size.small)
+            make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
             make.bottom.equalTo(self.scheduleSuggestLabel.snp.top)
         }
     }
@@ -116,28 +109,18 @@ class BookCell : UITableViewCell {
         self.scheduleSuggestLabel.snp.makeConstraints{ make in
             make.top.equalTo(self.deadlineLabel.snp.bottom)
             make.left.equalToSuperview().offset(Appearance.size.small)
-            make.right.equalToSuperview().offset(-Appearance.size.small)
-            make.bottom.equalTo(self.progressView.snp.top)
-        }
-    }
-
-    private func layoutProgressView() {
-        self.progressView.snp.makeConstraints{ make in
-            make.top.equalTo(self.scheduleSuggestLabel.snp.bottom)
-            make.height.equalTo(40)
-            make.left.equalToSuperview().offset(Appearance.size.small)
             make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
-            make.bottom.equalToSuperview().offset(-Appearance.size.small)
+            make.bottom.equalTo(self.slider.snp.top).offset(-Appearance.size.small)
         }
     }
 
     private func layoutSlider() {
         self.slider.snp.makeConstraints{ make in
-            make.top.equalToSuperview().offset(Appearance.size.small)
-            make.height.equalTo(5)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.top.equalTo(self.scheduleSuggestLabel.snp.bottom).offset(Appearance.size.small)
+            make.left.equalToSuperview().offset(Appearance.size.small)
+            make.right.equalToSuperview().offset(-Appearance.size.extraLarge)
+            make.height.equalToSuperview().multipliedBy(0.3)
+            make.bottom.equalToSuperview().offset(-Appearance.size.small)
         }
     }
 }
