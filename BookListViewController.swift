@@ -33,6 +33,7 @@ class BookListViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.title = "読んでるリスト"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.leftBarBtnClicked))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: #selector(BookListViewController.openLeftMenu))
         //広告バナー
         self.addBannerViewToView()
         //TableView
@@ -103,6 +104,11 @@ class BookListViewController: UIViewController {
         let navVC = UINavigationController(rootViewController:second)
         //ナビゲーションコントローラーの渡してモーダル遷移を行う
         self.present(navVC, animated: true, completion: nil)
+    }
+
+    @objc func openLeftMenu() {
+        // 打开drawerController
+        self.navigationController?.evo_drawerController?.toggleLeftDrawerSide(animated: true, completion: nil)
     }
 
     //MealViewControllerから戻ってきた時mealsにデータを入れる

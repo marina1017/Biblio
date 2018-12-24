@@ -16,6 +16,7 @@
 		C06EC62921D0BA47002B6411 /* Slider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06EC62821D0BA47002B6411 /* Slider.framework */; };
 		C06EC62B21D0BA55002B6411 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06EC62A21D0BA55002B6411 /* SnapKit.framework */; };
 		C06EC62D21D0BB6B002B6411 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06EC62C21D0BB6B002B6411 /* pop.framework */; };
+		C06EC62F21D0C0A1002B6411 /* LeftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06EC62E21D0C0A1002B6411 /* LeftViewController.swift */; };
 		C0ADED2721B049A0006D9C98 /* BookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADED2621B049A0006D9C98 /* BookCell.swift */; };
 		C0ADED2921B173F5006D9C98 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADED2821B173F5006D9C98 /* Appearance.swift */; };
 		C0BFCD0821B018B30051CCD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BFCD0721B018B30051CCD7 /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 		C06EC62821D0BA47002B6411 /* Slider.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Slider.framework; path = Carthage/Build/iOS/Slider.framework; sourceTree = "<group>"; };
 		C06EC62A21D0BA55002B6411 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
 		C06EC62C21D0BB6B002B6411 /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pop.framework; path = Carthage/Build/iOS/pop.framework; sourceTree = "<group>"; };
+		C06EC62E21D0C0A1002B6411 /* LeftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftViewController.swift; sourceTree = "<group>"; };
 		C0ADED2621B049A0006D9C98 /* BookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCell.swift; sourceTree = "<group>"; };
 		C0ADED2821B173F5006D9C98 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		C0BFCD0421B018B30051CCD7 /* Biblio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biblio.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 			children = (
 				C0BFCD0921B018B30051CCD7 /* BookListViewController.swift */,
 				C02ACFA521C6274C004757DA /* BookEditViewController.swift */,
+				C06EC62E21D0C0A1002B6411 /* LeftViewController.swift */,
 			);
 			name = Controllers;
 			path = ..;
@@ -322,6 +325,7 @@
 				C02ACFA821C641D0004757DA /* BookEditView.swift in Sources */,
 				C02ACFA621C6274C004757DA /* BookEditViewController.swift in Sources */,
 				C0ADED2721B049A0006D9C98 /* BookCell.swift in Sources */,
+				C06EC62F21D0C0A1002B6411 /* LeftViewController.swift in Sources */,
 				C0BFCD0821B018B30051CCD7 /* AppDelegate.swift in Sources */,
 				C0ADED2921B173F5006D9C98 /* Appearance.swift in Sources */,
 			);

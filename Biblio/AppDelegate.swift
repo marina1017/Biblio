@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import DrawerController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,15 +23,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         GADMobileAds.configure(withApplicationID: "ca-app-pub-3940256099942544~1458002511")
 
-        //ストーリーボードなしで実装
         let bookListViewController = BookListViewController()
         bookListViewController.view.backgroundColor = UIColor.white
-        let navigationController = UINavigationController(rootViewController: bookListViewController)
+        let leftViewController = LeftViewController()
+        let drawerController = DrawerController(
+            centerViewController: UINavigationController(rootViewController: bookListViewController),
+            leftDrawerViewController: UINavigationController(rootViewController: leftViewController))
+        drawerController.maximumLeftDrawerWidth = 250
+        drawerController.openDrawerGestureModeMask = .all
+        drawerController.closeDrawerGestureModeMask = .all
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = navigationController
+        self.window?.rootViewController = drawerController
         self.window?.makeKeyAndVisible()
-
-        
         return true
     }
 
