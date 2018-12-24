@@ -130,8 +130,6 @@ class BookEditView: UIView {
         super.init(frame: frame)
         self.commonInit()
         self.deadlineTextFiled.inputView = self.deadlineDatePicker
-
-
     }
 
     //MARK: 日付のdatepickerが選択されたらtextfieldに表示
