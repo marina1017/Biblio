@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3FB401AF3F8A0569A5A6267E /* Pods_Biblio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28817DB98A20DF506E801323 /* Pods_Biblio.framework */; };
+		9C80097121D2946200C5674D /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C80097021D2946200C5674D /* FormViewController.swift */; };
+		9C80097321D2969000C5674D /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C80097221D2969000C5674D /* UIView+extension.swift */; };
 		C00B62A821B0262100A8CD56 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C00B62A721B0262100A8CD56 /* GoogleService-Info.plist */; };
 		C02ACFA621C6274C004757DA /* BookEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02ACFA521C6274C004757DA /* BookEditViewController.swift */; };
 		C02ACFA821C641D0004757DA /* BookEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02ACFA721C641D0004757DA /* BookEditView.swift */; };
@@ -29,6 +31,8 @@
 		093F2AB1766D39E085BAB6F4 /* Pods-Biblio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biblio.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Biblio/Pods-Biblio.debug.xcconfig"; sourceTree = "<group>"; };
 		28817DB98A20DF506E801323 /* Pods_Biblio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Biblio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A0A6751128F2EC6DC761C57 /* Pods-Biblio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biblio.release.xcconfig"; path = "Pods/Target Support Files/Pods-Biblio/Pods-Biblio.release.xcconfig"; sourceTree = "<group>"; };
+		9C80097021D2946200C5674D /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
+		9C80097221D2969000C5674D /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		C00B62A721B0262100A8CD56 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C02ACFA521C6274C004757DA /* BookEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookEditViewController.swift; sourceTree = "<group>"; };
 		C02ACFA721C641D0004757DA /* BookEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookEditView.swift; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				C0ADED2821B173F5006D9C98 /* Appearance.swift */,
+				9C80097221D2969000C5674D /* UIView+extension.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 				C0BFCD0921B018B30051CCD7 /* BookListViewController.swift */,
 				C02ACFA521C6274C004757DA /* BookEditViewController.swift */,
 				C06EC62E21D0C0A1002B6411 /* LeftViewController.swift */,
+				9C80097021D2946200C5674D /* FormViewController.swift */,
 			);
 			name = Controllers;
 			path = ..;
@@ -320,6 +326,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C80097321D2969000C5674D /* UIView+extension.swift in Sources */,
+				9C80097121D2946200C5674D /* FormViewController.swift in Sources */,
 				C02ACFAB21C67B94004757DA /* Book.swift in Sources */,
 				C0BFCD0A21B018B30051CCD7 /* BookListViewController.swift in Sources */,
 				C02ACFA821C641D0004757DA /* BookEditView.swift in Sources */,

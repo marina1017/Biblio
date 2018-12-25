@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import DrawerController
 
 class LeftViewController: UIViewController {
 
@@ -24,6 +25,13 @@ class LeftViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 
         self.addTableViewToView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,6 +83,12 @@ extension LeftViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected! \(self.items[indexPath.row])")
+        //セルの選択解除
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        let formViewController = FormViewController()
+        
+        self.evo_drawerController?.centerViewController = UINavigationController(rootViewController: formViewController)
+        self.evo_drawerController?.toggleDrawerSide(.left, animated: true, completion: nil)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
