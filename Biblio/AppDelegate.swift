@@ -29,9 +29,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let drawerController = DrawerController(
             centerViewController: UINavigationController(rootViewController: bookListViewController),
             leftDrawerViewController: UINavigationController(rootViewController: leftViewController))
-        drawerController.maximumLeftDrawerWidth = 250
-        drawerController.openDrawerGestureModeMask = .all
+        drawerController.shouldStretchDrawer = false
+        drawerController.maximumLeftDrawerWidth = 250.0
         drawerController.closeDrawerGestureModeMask = .all
+        drawerController.openDrawerGestureModeMask = .all
+        drawerController.animationVelocity = 500
+        drawerController.drawerVisualStateBlock = { (drawerController, drawerSide, percentVisible) in
+            //この関数がないとAutoLayoutがなんか変
+            DrawerVisualState.parallaxVisualStateBlock(parallaxFactor: 4.0)(drawerController, drawerSide, percentVisible)
+        }
+
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = drawerController
         self.window?.makeKeyAndVisible()

@@ -54,9 +54,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C06EC62D21D0BB6B002B6411 /* pop.framework in Frameworks */,
-				C06EC62B21D0BA55002B6411 /* SnapKit.framework in Frameworks */,
 				C06EC62921D0BA47002B6411 /* Slider.framework in Frameworks */,
+				C06EC62B21D0BA55002B6411 /* SnapKit.framework in Frameworks */,
+				C06EC62D21D0BB6B002B6411 /* pop.framework in Frameworks */,
 				C06EC62621D0B82B002B6411 /* DrawerController.framework in Frameworks */,
 				3FB401AF3F8A0569A5A6267E /* Pods_Biblio.framework in Frameworks */,
 			);
@@ -476,6 +476,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Biblio/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -499,6 +500,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Biblio/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

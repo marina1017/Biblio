@@ -38,11 +38,11 @@ class LeftViewController: UIViewController {
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableView.automaticDimension
         self.view.addSubview(self.tableView)
-        self.tableView.snp.makeConstraints{ make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.left.equalTo(self.view.safeAreaLayoutGuide)
-            make.right.equalTo(self.view.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        self.tableView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
 }
